@@ -1,0 +1,53 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29806.167
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 - Servico", "1 - Servico", "{CD2BE924-E85E-44D7-A0BB-7FF6FEECB735}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 -Estrutura", "2 -Estrutura", "{DD3655F9-1406-4661-AFE5-1CF6FB79B371}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AvaliacaoGibarco.BackEnd", "src\AvaliacaoGibarco.BackEnd\AvaliacaoGibarco.BackEnd.csproj", "{A50B7344-CFA3-4BEC-9AD5-94860BDF98EB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AvaliacaoGibarco.BackEnd.Data", "src\AvaliacaoGibarco.BackEnd.Data\AvaliacaoGibarco.BackEnd.Data.csproj", "{DBB80BDF-7DB3-4517-946B-54C289F015D1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AvaliacaoGibarco.BackEnd.Idc", "src\AvaliacaoGibarco.BackEnd.Idc\AvaliacaoGibarco.BackEnd.Idc.csproj", "{2970FA3A-8591-405A-B864-ADF5E4C04C64}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AvaliacaoGibarco.BackEnd.Api", "src\AvaliacaoGibarco.BackEnd.Api\AvaliacaoGibarco.BackEnd.Api.csproj", "{156F11F8-CF18-463C-9A61-969C7BE8AC3C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A50B7344-CFA3-4BEC-9AD5-94860BDF98EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A50B7344-CFA3-4BEC-9AD5-94860BDF98EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A50B7344-CFA3-4BEC-9AD5-94860BDF98EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A50B7344-CFA3-4BEC-9AD5-94860BDF98EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DBB80BDF-7DB3-4517-946B-54C289F015D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBB80BDF-7DB3-4517-946B-54C289F015D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBB80BDF-7DB3-4517-946B-54C289F015D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBB80BDF-7DB3-4517-946B-54C289F015D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2970FA3A-8591-405A-B864-ADF5E4C04C64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2970FA3A-8591-405A-B864-ADF5E4C04C64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2970FA3A-8591-405A-B864-ADF5E4C04C64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2970FA3A-8591-405A-B864-ADF5E4C04C64}.Release|Any CPU.Build.0 = Release|Any CPU
+		{156F11F8-CF18-463C-9A61-969C7BE8AC3C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{156F11F8-CF18-463C-9A61-969C7BE8AC3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{156F11F8-CF18-463C-9A61-969C7BE8AC3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{156F11F8-CF18-463C-9A61-969C7BE8AC3C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A50B7344-CFA3-4BEC-9AD5-94860BDF98EB} = {DD3655F9-1406-4661-AFE5-1CF6FB79B371}
+		{DBB80BDF-7DB3-4517-946B-54C289F015D1} = {DD3655F9-1406-4661-AFE5-1CF6FB79B371}
+		{2970FA3A-8591-405A-B864-ADF5E4C04C64} = {DD3655F9-1406-4661-AFE5-1CF6FB79B371}
+		{156F11F8-CF18-463C-9A61-969C7BE8AC3C} = {CD2BE924-E85E-44D7-A0BB-7FF6FEECB735}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8F2F535B-C8B8-4143-AAFD-6F2C96566252}
+	EndGlobalSection
+EndGlobal
