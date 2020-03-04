@@ -3,15 +3,15 @@ using AvaliacaoGibarco.BackEnd.Dominio.ObjetoDeValor;
 
 namespace AvaliacaoGibarco.BackEnd.Dominio.Interfaces.Servico
 {
-    public interface IPaisesServ
+    public interface IPaisServ
     {
         int Inserir(InserirCmd comando);
 
         int Atualizar(AtualizarCmd comando);
 
-        Paises Obter(int codigo);
+        Pais Obter(ObterCmd comando);
 
-        Paises[] Filtrar(FiltrarCmd comando);
+        Pais[] Filtrar(FiltrarCmd comando);
 
         int Delete(DeletarCmd comando);
     }

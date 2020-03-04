@@ -1,17 +1,17 @@
 ﻿using FluentValidation;
 
-namespace AvaliacaoGibarco.BackEnd.Dominio.Commando.PaisesCmd.Validacao
+namespace AvaliacaoGibarco.BackEnd.Dominio.Commando.ClienteCmd.Validacao
 {
     public class FiltrarValidacao : AbstractValidator<FiltrarCmd>
     {
         public FiltrarValidacao()
         {
-            RuleFor(f => f.Descricao)
+            RuleFor(f => f.RazaoSocial)
                 .NotEmpty().WithMessage("O campo {PropertyName} precisa ser fornecido")
-                .Length(2, 100)
+                .Length(5, 255)
                 .WithMessage("O campo {PropertyName} precisa ter entre {MinLength} e {MaxLength} caracteres");
 
-            RuleFor(f => f.Codigo)
+            RuleFor(f => f.Pais)
                 .NotEmpty().WithMessage("O campo {PropertyName} precisa ser fornecido");
         }
     }

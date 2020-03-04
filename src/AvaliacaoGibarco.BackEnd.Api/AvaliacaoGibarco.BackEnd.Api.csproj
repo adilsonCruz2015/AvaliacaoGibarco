@@ -123,6 +123,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\AvaliacaoGibarco.mdf" />
+    <Content Include="App_Data\AvaliacaoGibarco_log.ldf">
+      <DependentUpon>AvaliacaoGibarco.mdf</DependentUpon>
+    </Content>
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -131,7 +135,9 @@
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Auxiliar\ResolverConexao.cs" />
+    <Compile Include="Controllers\ClienteController.cs" />
     <Compile Include="Controllers\MainController.cs" />
+    <Compile Include="Controllers\PaisController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>

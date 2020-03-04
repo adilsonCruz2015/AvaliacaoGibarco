@@ -23,10 +23,18 @@ namespace AvaliacaoGibarco.BackEnd.Data.Persistencia.Repositorios
 
         public int Delete(int id)
         {
-            throw new NotImplementedException();
+            StringBuilder sql = new StringBuilder();
+            sql.Append($@"DELETE 
+                          FROM { nameof(Pais)} WHERE Codigo = @Codigo ");
+
+            var parametros = new DynamicParameters(new { id });
+
+            return _conexao.Sessao.Execute(sql.ToString(), 
+                                           parametros, 
+                                           _conexao.Transicao);
         }
 
-        public Paises[] Filtrar(FiltrarCmd comando)
+        public Pais[] Filtrar(FiltrarCmd comando)
         {
             StringBuilder sql = new StringBuilder();
             StringBuilder sqlFiltro = new StringBuilder();
@@ -35,7 +43,7 @@ namespace AvaliacaoGibarco.BackEnd.Data.Persistencia.Repositorios
             sql.Append($@"SELECT 
                                 Codigo,
                                 Descricao
-                          FROM { nameof(Paises)} ");
+                          FROM { nameof(Pais)} ");
 
             if (!string.IsNullOrEmpty(comando.Descricao))
             {
@@ -51,43 +59,43 @@ namespace AvaliacaoGibarco.BackEnd.Data.Persistencia.Repositorios
 
             sql.Append(Regex.Replace(sqlFiltro.ToString(), @"^ AND ", " WHERE "));
 
-            return _conexao.Sessao.Query<Paises>(sql.ToString(), 
+            return _conexao.Sessao.Query<Pais>(sql.ToString(), 
                                                  parametros, 
                                                  _conexao.Transicao).ToArray();
         }
 
-        public Paises[] Get()
+        public Pais[] Get()
         {
             StringBuilder sql = new StringBuilder();
 
             sql.Append($@"SELECT 
                                 Codigo,
                                 Descricao
-                          FROM { nameof(Paises)} ");
+                          FROM { nameof(Pais)} ");
 
-            return _conexao.Sessao.Query<Paises>(sql.ToString(), 
+            return _conexao.Sessao.Query<Pais>(sql.ToString(), 
                                                  new { }, 
                                                  _conexao.Transicao).ToArray();
         }
 
-        public Paises Get(int id)
+        public Pais Get(int id)
         {
             StringBuilder sql = new StringBuilder();
             sql.Append($@"SELECT 
                                 Codigo,
                                 Descricao
-                          FROM { nameof(Paises)} WHERE Codigo = @Codigo");
+                          FROM { nameof(Pais)} WHERE Codigo = @Codigo");
 
-            return _conexao.Sessao.Query<Paises>(sql.ToString(),
-                                                 new { Codigo = id },
-                                                 _conexao.Transicao).FirstOrDefault();
+            return _conexao.Sessao.Query<Pais>(sql.ToString(),
+                                               new { Codigo = id },
+                                               _conexao.Transicao).FirstOrDefault();
         }
 
-        public int Insert(Paises obj)
+        public int Insert(Pais obj)
         {
             StringBuilder sql = new StringBuilder();
             sql.Append($@"
-                         INSERT INTO { nameof(Paises) } (Descricao)
+                         INSERT INTO { nameof(Pais) } (Descricao)
                                 VALUES(@Descricao)");
 
             var parametros = new DynamicParameters();
@@ -97,21 +105,19 @@ namespace AvaliacaoGibarco.BackEnd.Data.Persistencia.Repositorios
 
         }
 
-        public int Update(Paises obj)
+        public int Update(Pais obj)
         {
             StringBuilder sql = new StringBuilder();
             sql.Append($@"
-                         UPDATE { nameof(Paises) } SET   Descricao = @Descricao, 
+                         UPDATE { nameof(Pais) } SET   Descricao = @Descricao, 
                                                    WHERE Codigo = @Codigo");
 
-            var parametros = new DynamicParameters(new
-            {
-                obj.Codigo
-            });
-
+            var parametros = new DynamicParameters(new { obj.Codigo });
             parametros.Add("@Descricao", obj.Descricao, DbType.AnsiString, size: 100);
 
-            return _conexao.Sessao.Execute(sql.ToString(), parametros, _conexao.Transicao);
+            return _conexao.Sessao.Execute(sql.ToString(), 
+                                           parametros, 
+                                           _conexao.Transicao);
         }
     }
 }

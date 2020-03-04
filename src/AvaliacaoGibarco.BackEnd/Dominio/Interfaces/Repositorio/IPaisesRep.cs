@@ -4,9 +4,9 @@ using AvaliacaoGibarco.BackEnd.Dominio.ObjetoDeValor;
 
 namespace AvaliacaoGibarco.BackEnd.Dominio.Interfaces.Repositorio
 {
-    public interface IPaisesRep :  IRepositorioBaseEscrita<Paises>,
-                            IRepositorioBaseLeitura<Paises>
+    public interface IPaisesRep :  IRepositorioBaseEscrita<Pais>,
+                                   IRepositorioBaseLeitura<Pais>
     {
-        Paises[] Filtrar(FiltrarCmd comando);
+        Pais[] Filtrar(FiltrarCmd comando);
     }
 }

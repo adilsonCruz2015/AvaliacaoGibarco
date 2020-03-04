@@ -1,11 +1,11 @@
 ﻿using AvaliacaoGibarco.BackEnd.Dominio.Commando.Comum;
 
-namespace AvaliacaoGibarco.BackEnd.Dominio.Commando.PaisesCmd
+namespace AvaliacaoGibarco.BackEnd.Dominio.Commando.ClienteCmd
 {
     public class DeletarCmd : CodigoCmd
     {
-        public DeletarCmd(int codigo) 
+        public DeletarCmd(int codigo)
             : base(codigo) { }
-        
+
     }
 }

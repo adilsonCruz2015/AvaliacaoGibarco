@@ -9,6 +9,7 @@ namespace AvaliacaoGibarco.BackEnd.Idc.Modulos
         public static void Carregar(Container recipiente)
         {
             recipiente.Register<IPaisesRep, PaisesRep>();
+            recipiente.Register<IClienteRep, ClienteRep>();
         }
     }
 }

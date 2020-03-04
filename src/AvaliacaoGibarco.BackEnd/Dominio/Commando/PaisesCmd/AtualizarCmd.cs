@@ -1,19 +1,17 @@
 ﻿using AvaliacaoGibarco.BackEnd.Dominio.ObjetoDeValor;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace AvaliacaoGibarco.BackEnd.Dominio.Commando.PaisesCmd
 {
     public class AtualizarCmd
     {
+        [Display(Name = "Código")]
         public int Codigo { get; set; }
 
+        [Display(Name = "Descrição")]
         public string Descricao { get; set; }
 
-        public void Aplicar(ref Paises paises)
+        public void Aplicar(ref Pais paises)
         {
             if (!string.IsNullOrEmpty(Descricao))
                 paises.Descricao = Descricao;

@@ -1,9 +1,9 @@
 ﻿
 namespace AvaliacaoGibarco.BackEnd.Dominio.ObjetoDeValor
 {
-    public class Paises
+    public class Pais
     {
-        public Paises(string descricao)
+        public Pais(string descricao)
         {
             Descricao = descricao;
         }

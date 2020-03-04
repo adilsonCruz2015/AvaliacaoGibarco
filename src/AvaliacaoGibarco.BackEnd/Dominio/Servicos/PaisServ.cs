@@ -5,17 +5,12 @@ using AvaliacaoGibarco.BackEnd.Dominio.Interfaces.Repositorio;
 using AvaliacaoGibarco.BackEnd.Dominio.Interfaces.Servico;
 using AvaliacaoGibarco.BackEnd.Dominio.ObjetoDeValor;
 using AvaliacaoGibarco.BackEnd.Dominio.Servicos.Comum;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AvaliacaoGibarco.BackEnd.Dominio.Servicos
 {
-    public class PaisesServ : BaseService, IPaisesServ
+    public class PaisServ : BaseService, IPaisServ
     {
-        public PaisesServ(INotificador notificador,
+        public PaisServ(INotificador notificador,
                           IPaisesRep rep)
             :base(notificador)
         {
@@ -30,12 +25,12 @@ namespace AvaliacaoGibarco.BackEnd.Dominio.Servicos
 
             if(ExecutarValidacao(new AtualizarValidacao(), comando))
             {
-                Paises paises = _rep.Get(comando.Codigo);
+                Pais pais = _rep.Get(comando.Codigo);
 
-                if(!object.Equals(paises, null))
+                if(!object.Equals(pais, null))
                 {
-                    comando.Aplicar(ref paises);
-                    resultado = _rep.Update(paises);
+                    comando.Aplicar(ref pais);
+                    resultado = _rep.Update(pais);
 
                     if (resultado < 0)
                         Notificar("Não foi possível atualizar o País");
@@ -64,9 +59,9 @@ namespace AvaliacaoGibarco.BackEnd.Dominio.Servicos
             return resultado;
         }
 
-        public Paises[] Filtrar(FiltrarCmd comando)
+        public Pais[] Filtrar(FiltrarCmd comando)
         {
-            Paises[] paises = null;
+            Pais[] paises = null;
 
             if (ExecutarValidacao(new FiltrarValidacao(), comando))
                 paises = _rep.Filtrar(comando);
@@ -80,10 +75,10 @@ namespace AvaliacaoGibarco.BackEnd.Dominio.Servicos
 
             if (ExecutarValidacao(new InserirValidacao(), comando))
             {
-                Paises paises = null;
-                comando.Aplicar(ref paises);
+                Pais pais = null;
+                comando.Aplicar(ref pais);
 
-                resultado = _rep.Insert(paises);
+                resultado = _rep.Insert(pais);
                 if (resultado < 0)
                     Notificar("Não foi possível inserir o País");
             }
@@ -91,12 +86,17 @@ namespace AvaliacaoGibarco.BackEnd.Dominio.Servicos
             return resultado;
         }
 
-        public Paises Obter(int codigo)
+        public Pais Obter(ObterCmd comando)
         {
-            Paises pais = _rep.Get(codigo);
+            Pais pais = null;
 
-            if (object.Equals(pais, null))
-                Notificar("Registro não encontrado!");
+            if (ExecutarValidacao(new ObterValidacao(), comando))
+            {
+                pais = _rep.Get(comando.Codigo);
+
+                if (object.Equals(pais, null))
+                    Notificar("Registro não encontrado!");
+            }
 
             return pais;
         }

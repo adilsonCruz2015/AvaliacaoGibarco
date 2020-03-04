@@ -2,10 +2,9 @@
 
 namespace AvaliacaoGibarco.BackEnd.Dominio.Commando.PaisesCmd
 {
-    public class DeletarCmd : CodigoCmd
+    public class ObterCmd : CodigoCmd
     {
-        public DeletarCmd(int codigo) 
-            : base(codigo) { }
-        
+        public ObterCmd(int codigo)
+            :base(codigo) { }
     }
 }
