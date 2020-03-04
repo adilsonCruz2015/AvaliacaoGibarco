@@ -4,7 +4,9 @@ namespace AvaliacaoGibarco.BackEnd.Dominio.Commando.PaisesCmd
 {
     public class ObterCmd : CodigoCmd
     {
-        public ObterCmd(int codigo)
+        public ObterCmd() : base() { }
+
+        public ObterCmd(int? codigo)
             :base(codigo) { }
     }
 }

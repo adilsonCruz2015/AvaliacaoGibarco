@@ -1,17 +1,15 @@
 ﻿using AvaliacaoGibarco.BackEnd.Dominio.ObjetoDeValor;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AvaliacaoGibarco.BackEnd.Dominio.Entidade
 {
     public class Cliente
     {
+        public Cliente() { }
+
         public Cliente(string cnpj, 
                        string razaoSocial,
                        Pais pais)
+            : this()
         {
             Cnpj = cnpj;
             RazaoSocial = razaoSocial;

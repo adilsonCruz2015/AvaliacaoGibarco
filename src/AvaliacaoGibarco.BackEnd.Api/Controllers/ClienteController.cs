@@ -2,17 +2,16 @@
 using AvaliacaoGibarco.BackEnd.Dominio.Entidade;
 using AvaliacaoGibarco.BackEnd.Dominio.Interfaces;
 using AvaliacaoGibarco.BackEnd.Dominio.Interfaces.Servico;
-using System;
-using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Http;
 
 namespace AvaliacaoGibarco.BackEnd.Api.Controllers
 {
+    [RoutePrefix("Cliente")]
+    [Description("Gerenciar Cliente")]
     public class ClienteController : MainController
     {
         public ClienteController(INotificador notificador,
@@ -79,6 +78,9 @@ namespace AvaliacaoGibarco.BackEnd.Api.Controllers
         public async Task<HttpResponseMessage> Post([FromBody]InserirCmd parametros)
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
+
+            if (object.Equals(parametros, null))
+                parametros = new InserirCmd();
 
             _serv.Inserir(parametros);
 

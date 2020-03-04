@@ -52,6 +52,7 @@
     <Compile Include="Persistencia\Interfaces\IResolverConexao.cs" />
     <Compile Include="Persistencia\Repositorios\ClienteRep.cs" />
     <Compile Include="Persistencia\Repositorios\PaisesRep.cs" />
+    <Compile Include="Persistencia\Repositorios\UsuarioRep.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

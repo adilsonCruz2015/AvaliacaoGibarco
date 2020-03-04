@@ -10,6 +10,7 @@ namespace AvaliacaoGibarco.BackEnd.Idc.Modulos
         {
             recipiente.Register<IPaisesRep, PaisesRep>();
             recipiente.Register<IClienteRep, ClienteRep>();
+            recipiente.Register<IUsuarioRep, UsuarioRep>();
         }
     }
 }

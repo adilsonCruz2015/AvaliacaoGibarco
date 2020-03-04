@@ -138,6 +138,7 @@
     <Compile Include="Controllers\ClienteController.cs" />
     <Compile Include="Controllers\MainController.cs" />
     <Compile Include="Controllers\PaisController.cs" />
+    <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>

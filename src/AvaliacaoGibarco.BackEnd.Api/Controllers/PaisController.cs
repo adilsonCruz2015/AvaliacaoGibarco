@@ -10,7 +10,7 @@ using System.Web.Http;
 
 namespace AvaliacaoGibarco.BackEnd.Api.Controllers
 {
-    [RoutePrefix("País")]
+    [RoutePrefix("pais")]
     [Description("Gerenciar País")]
     public class PaisController : MainController
     {
@@ -23,7 +23,7 @@ namespace AvaliacaoGibarco.BackEnd.Api.Controllers
 
         private readonly IPaisServ _serv;
 
-        [HttpGet, Route("{Codigo}")]
+        [HttpGet, Route("{codigo}")]
         [Display(Name = "Obter")]
         public async Task<HttpResponseMessage> Get([FromUri] ObterCmd parametros)
         {
@@ -78,6 +78,9 @@ namespace AvaliacaoGibarco.BackEnd.Api.Controllers
         public async Task<HttpResponseMessage> Post([FromBody]InserirCmd parametros)
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
+
+            if (object.Equals(parametros, null))
+                parametros = new InserirCmd();
 
             _serv.Inserir(parametros);
 

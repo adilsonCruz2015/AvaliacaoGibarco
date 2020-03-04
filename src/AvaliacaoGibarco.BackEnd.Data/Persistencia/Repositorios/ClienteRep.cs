@@ -81,7 +81,7 @@ namespace AvaliacaoGibarco.BackEnd.Data.Persistencia.Repositorios
                          INSERT INTO { nameof(Cliente) } (Cnpj, RazaoSocial, CodigoPais)
                                 VALUES(@Cnpj, @RazaoSocial, @CodigoPais)");
 
-            var parametros = new DynamicParameters(new { obj.Codigo });
+            var parametros = new DynamicParameters();
 
             parametros.Add("@Cnpj", obj.Cnpj, DbType.AnsiString, size: 18);
             parametros.Add("@RazaoSocial", obj.RazaoSocial, DbType.AnsiString, size: 255);

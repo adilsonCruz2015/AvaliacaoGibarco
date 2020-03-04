@@ -62,7 +62,7 @@ namespace AvaliacaoGibarco.BackEnd.Dominio.Servicos
 
             if (ExecutarValidacao(new DeletarValidacao(), comando))
             {
-                resultado = _rep.Delete(comando.Codigo);
+                resultado = _rep.Delete(comando.Codigo.Value);
 
                 if (resultado < 0)
                     Notificar("Não foi possível excluír o País");
@@ -113,7 +113,7 @@ namespace AvaliacaoGibarco.BackEnd.Dominio.Servicos
 
             if (ExecutarValidacao(new ObterValidacao(), comando))
             {
-                cliente = _rep.Get(comando.Codigo);
+                cliente = _rep.Get(comando.Codigo.Value);
 
                 if (object.Equals(cliente, null))
                     Notificar("Registro não encontrado!");

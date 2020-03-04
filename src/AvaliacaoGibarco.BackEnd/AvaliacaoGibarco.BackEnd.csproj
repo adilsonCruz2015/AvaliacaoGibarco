@@ -48,7 +48,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Dominio\Commando\AutenticacaoCmd\LogarCmd.cs" />
     <Compile Include="Dominio\Commando\ClienteCmd\AtualizarCmd.cs" />
     <Compile Include="Dominio\Commando\ClienteCmd\DeletarCmd.cs" />
     <Compile Include="Dominio\Commando\ClienteCmd\FiltrarCmd.cs" />
@@ -70,17 +69,21 @@
     <Compile Include="Dominio\Commando\PaisesCmd\Validacao\FiltrarValidacao.cs" />
     <Compile Include="Dominio\Commando\PaisesCmd\Validacao\InserirValidacao.cs" />
     <Compile Include="Dominio\Commando\PaisesCmd\Validacao\ObterValidacao.cs" />
-    <Compile Include="Dominio\Entidade\Autenticacao.cs" />
+    <Compile Include="Dominio\Commando\UsuarioCmd\LogarCmd.cs" />
+    <Compile Include="Dominio\Commando\UsuarioCmd\Validacao\LogarValidacao.cs" />
     <Compile Include="Dominio\Entidade\Cliente.cs" />
     <Compile Include="Dominio\Entidade\Contato.cs" />
+    <Compile Include="Dominio\Entidade\Usuario.cs" />
     <Compile Include="Dominio\Interfaces\IAutoValidacao.cs" />
     <Compile Include="Dominio\Interfaces\INotificador.cs" />
     <Compile Include="Dominio\Interfaces\Repositorio\Comum\IRepositorioBaseEscrita.cs" />
     <Compile Include="Dominio\Interfaces\Repositorio\Comum\IRepositorioBaseLeitura.cs" />
     <Compile Include="Dominio\Interfaces\Repositorio\IClienteRep.cs" />
     <Compile Include="Dominio\Interfaces\Repositorio\IPaisesRep.cs" />
+    <Compile Include="Dominio\Interfaces\Repositorio\IUsuarioRep.cs" />
     <Compile Include="Dominio\Interfaces\Servico\IClienteServ.cs" />
     <Compile Include="Dominio\Interfaces\Servico\IPaisServ.cs" />
+    <Compile Include="Dominio\Interfaces\Servico\IUsuarioServ.cs" />
     <Compile Include="Dominio\Notificacoes\Notificacao.cs" />
     <Compile Include="Dominio\Notificacoes\Notificador.cs" />
     <Compile Include="Dominio\ObjetoDeValor\Banco.cs" />
@@ -88,6 +91,7 @@
     <Compile Include="Dominio\Servicos\ClienteServ.cs" />
     <Compile Include="Dominio\Servicos\Comum\BaseService.cs" />
     <Compile Include="Dominio\Servicos\PaisServ.cs" />
+    <Compile Include="Dominio\Servicos\UsuarioServ.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

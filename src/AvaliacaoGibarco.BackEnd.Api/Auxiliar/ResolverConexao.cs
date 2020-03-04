@@ -9,7 +9,7 @@ namespace AvaliacaoGibarco.BackEnd.Api.Auxiliar
     {
         private IDictionary<Banco, string> _resultado = new Dictionary<Banco, string>()
         {
-            {Banco.AvaliacaoGibarco, "AvaliacaoTailorit" }
+            {Banco.AvaliacaoGibarco, "AvaliacaoGibarco" }
         };
 
         public string ObterConexao(Banco banco)
