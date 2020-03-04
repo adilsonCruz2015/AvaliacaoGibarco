@@ -68,9 +68,9 @@ namespace AvaliacaoGibarco.BackEnd.Api.Controllers
             if (object.Equals(parametros, null))
                 parametros = new FiltrarCmd();
 
-            Pais[] usuario = _serv.Filtrar(parametros);
+            Pais[] paises = _serv.Filtrar(parametros);
 
-            return CustomResponse(usuario);
+            return CustomResponse(paises);
         }
 
         [HttpPost, Route]

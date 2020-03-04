@@ -11,8 +11,5 @@ namespace AvaliacaoGibarco.BackEnd.Dominio.Commando.ClienteCmd
 
         [Display(Name = "País")]
         public int Pais { get; set; }
-
-        [Display(Name = "Descricao")]
-        public string Descricao { get; set; }
     }
 }

@@ -54,12 +54,6 @@ namespace AvaliacaoGibarco.BackEnd.Data.Persistencia.Repositorios
                 parametros.Add("@Codigo", comando.Pais, DbType.Int32);
             }
 
-            if (!string.IsNullOrEmpty(comando.Descricao))
-            {
-                sqlFiltro.Append(" AND P.Descricao LIKE CONCAT('%',@Descricao,'%') ");
-                parametros.Add("@Descricao", comando.Descricao, DbType.AnsiString, size: 100);
-            }
-
             sql.Append(Regex.Replace(sqlFiltro.ToString(), @"^ AND ", " WHERE "));
 
             return _conexao.Sessao.Query<Cliente, Pais, Cliente>(sql.ToString(),

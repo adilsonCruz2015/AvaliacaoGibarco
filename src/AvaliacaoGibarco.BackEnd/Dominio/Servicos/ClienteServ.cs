@@ -75,8 +75,10 @@ namespace AvaliacaoGibarco.BackEnd.Dominio.Servicos
         {
             Cliente[] clientes = null;
 
-            if (ExecutarValidacao(new FiltrarValidacao(), comando))
-                clientes = _rep.Filtrar(comando);
+            //if (ExecutarValidacao(new FiltrarValidacao(), comando))
+            clientes = _rep.Filtrar(comando);
+            if(!object.Equals(clientes, null) && clientes.Length.Equals(0))
+                Notificar("Registro não encontrado");
 
             return clientes;
         }
