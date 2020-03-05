@@ -16,8 +16,7 @@ namespace AvaliacaoGibarco.BackEnd.Data.Persistencia.Contexto
 
         private readonly IResolverConexao _dadosDeConexao;
         private IDbConnection _sessao;
-        private Banco _banco;
-
+        
         public IDbTransaction Transicao { get; private set; }
 
         public IDbConnection Sessao
@@ -35,11 +34,6 @@ namespace AvaliacaoGibarco.BackEnd.Data.Persistencia.Contexto
             }
 
             return _sessao;
-        }
-
-        public string DbFile
-        {
-            get { return Environment.CurrentDirectory + "\\SimpleDb.sqlite"; }
         }
 
         public void DesfazerTransicao()
@@ -91,7 +85,7 @@ namespace AvaliacaoGibarco.BackEnd.Data.Persistencia.Contexto
 
         public void InformarBanco(Banco banco)
         {
-            _banco = banco;
+            
         }
     }
 }
