@@ -25,5 +25,7 @@ namespace AvaliacaoGibarco.BackEnd.Data.Persistencia.Interfaces
         IDbTransaction Transicao { get; }
 
         void InformarBanco(Banco banco);
+
+        string DbFile { get; }
     }
 }

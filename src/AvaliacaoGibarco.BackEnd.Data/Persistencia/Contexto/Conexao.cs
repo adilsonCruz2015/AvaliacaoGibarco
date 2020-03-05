@@ -1,8 +1,10 @@
 ﻿using AvaliacaoGibarco.BackEnd.Data.Persistencia.Interfaces;
 using AvaliacaoGibarco.BackEnd.Dominio.ObjetoDeValor;
+using Microsoft.Data.Sqlite;
 using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
 
 namespace AvaliacaoGibarco.BackEnd.Data.Persistencia.Contexto
 {
@@ -28,11 +30,21 @@ namespace AvaliacaoGibarco.BackEnd.Data.Persistencia.Contexto
         {
             if (object.Equals(_sessao, null) || _sessao.State.Equals(ConnectionState.Closed))
             {
-                _sessao = new SqlConnection(_dadosDeConexao.ObterConexao(_banco));
+                //_sessao = new SqlConnection(_dadosDeConexao.ObterConexao(_banco));
+
+                string caminho = "Data Source=App_Data\\database.db;";
+
+                _sessao = new SqliteConnection(caminho);
                 _sessao.Open();
+                new GerenciarTabelas(this);
             }
 
             return _sessao;
+        }
+
+        public string DbFile
+        {
+            get { return Environment.CurrentDirectory + "\\SimpleDb.sqlite"; }
         }
 
         public void DesfazerTransicao()
