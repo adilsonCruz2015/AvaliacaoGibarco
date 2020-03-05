@@ -3,7 +3,6 @@ using AvaliacaoGibarco.BackEnd.Dominio.Commando.PaisesCmd;
 using AvaliacaoGibarco.BackEnd.Dominio.Interfaces.Repositorio;
 using AvaliacaoGibarco.BackEnd.Dominio.ObjetoDeValor;
 using Dapper;
-using System;
 using System.Data;
 using System.Linq;
 using System.Text;
@@ -47,7 +46,7 @@ namespace AvaliacaoGibarco.BackEnd.Data.Persistencia.Repositorios
 
             if (!string.IsNullOrEmpty(comando.Descricao))
             {
-                sqlFiltro.Append(" AND Descricao LIKE CONCAT('%',@Descricao,'%') ");
+                sqlFiltro.Append(" AND Descricao = @Descricao ");
                 parametros.Add("@Descricao", comando.Descricao, DbType.AnsiString, size: 100);
             }
 

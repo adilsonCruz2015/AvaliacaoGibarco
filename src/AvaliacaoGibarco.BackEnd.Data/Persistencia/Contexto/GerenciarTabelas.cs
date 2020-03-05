@@ -21,7 +21,6 @@ namespace AvaliacaoGibarco.BackEnd.Data.Persistencia.Contexto
             {
                 try
                 {
-                    conexao.Sessao.Open();
                     conexao.Sessao.Execute(GerarTabelas(), new { });
                     conexao.Sessao.Execute(GerarDados(), new { });
                 }

@@ -38,13 +38,13 @@ namespace AvaliacaoGibarco.BackEnd.Data.Persistencia.Repositorios
 
             if (!string.IsNullOrEmpty(comando.Cnpj))
             {
-                sqlFiltro.Append(" AND C.Cnpj LIKE CONCAT('%',@Cnpj,'%') ");
+                sqlFiltro.Append(" AND C.Cnpj = @Cnpj ");
                 parametros.Add("@Cnpj", comando.Cnpj, DbType.AnsiString, size: 18);
             }
 
             if (!string.IsNullOrEmpty(comando.RazaoSocial))
             {
-                sqlFiltro.Append(" AND C.RazaoSocial LIKE CONCAT('%',@RazaoSocial,'%') ");
+                sqlFiltro.Append(" AND C.RazaoSocial = @RazaoSocial ");
                 parametros.Add("@RazaoSocial", comando.RazaoSocial, DbType.AnsiString, size: 255);
             }
 
@@ -55,17 +55,18 @@ namespace AvaliacaoGibarco.BackEnd.Data.Persistencia.Repositorios
             }
 
             sql.Append(Regex.Replace(sqlFiltro.ToString(), @"^ AND ", " WHERE "));
-
+           
             return _conexao.Sessao.Query<Cliente, Pais, Cliente>(sql.ToString(),
-                (cliente, pais) => 
-                {
-                    cliente.Pais = pais;
-                    return cliente;
-                },
-                parametros,
-                _conexao.Transicao, 
-                splitOn: "Codigo, Codigo"
-                ).ToArray();
+            (cliente, pais) =>
+            {
+                cliente.Pais = pais;
+                return cliente;
+            },
+            parametros,
+            _conexao.Transicao,
+            splitOn: "Codigo, Codigo"
+            ).ToArray();
+           
         }
 
         public int Insert(Cliente obj)
