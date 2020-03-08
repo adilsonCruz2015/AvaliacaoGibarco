@@ -1,20 +1,20 @@
-﻿using AvaliacaoGibarco.BackEnd.Dominio.Commando.UsuarioCmd;
+﻿using AvaliacaoGibarco.BackEnd.Dominio.Commando.AutenticacaoCmd;
 using AvaliacaoGibarco.BackEnd.Dominio.Entidade;
 
 namespace AvaliacaoGibarco.BackEnd.Dominio.Interfaces.Servico
 {
-    public interface IUsuarioServ
+    public interface IAutenticacaoServ
     {
-        Usuario ObterUserName(string username);
-
         int Inserir(InserirCmd comando);
 
         int Atualizar(AtualizarCmd comando);
 
-        Usuario Obter(ObterCmd comando);
+        Autenticacao Obter(ObterCmd comando);
 
-        Usuario[] Filtrar(FiltrarCmd comando);
+        Autenticacao[] Filtrar(FiltrarCmd comando);
 
         int Delete(DeletarCmd comando);
+
+        Autenticacao Logar(LogarCmd comando);
     }
 }

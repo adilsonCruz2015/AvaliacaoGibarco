@@ -43,6 +43,18 @@
     <Reference Include="FluentValidation, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7de548da2fbae0f0, processorArchitecture=MSIL">
       <HintPath>..\..\packages\FluentValidation.8.6.1\lib\net45\FluentValidation.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.IdentityModel.JsonWebTokens, Version=5.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.IdentityModel.JsonWebTokens.5.6.0\lib\net461\Microsoft.IdentityModel.JsonWebTokens.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Logging, Version=5.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.IdentityModel.Logging.5.6.0\lib\net461\Microsoft.IdentityModel.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Tokens, Version=5.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.IdentityModel.Tokens.5.6.0\lib\net461\Microsoft.IdentityModel.Tokens.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.10.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Annotations, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.ComponentModel.Annotations.4.4.1\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
@@ -58,6 +70,9 @@
     <Reference Include="System.Data.SQLite.Linq, Version=1.0.112.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Data.SQLite.Linq.1.0.112.0\lib\net46\System.Data.SQLite.Linq.dll</HintPath>
     </Reference>
+    <Reference Include="System.IdentityModel.Tokens.Jwt, Version=5.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.IdentityModel.Tokens.Jwt.5.6.0\lib\net461\System.IdentityModel.Tokens.Jwt.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -66,6 +81,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dominio\Commando\AutenticacaoCmd\AtualizarCmd.cs" />
+    <Compile Include="Dominio\Commando\AutenticacaoCmd\DeletarCmd.cs" />
+    <Compile Include="Dominio\Commando\AutenticacaoCmd\FiltrarCmd.cs" />
+    <Compile Include="Dominio\Commando\AutenticacaoCmd\InserirCmd.cs" />
+    <Compile Include="Dominio\Commando\AutenticacaoCmd\LogarCmd.cs" />
+    <Compile Include="Dominio\Commando\AutenticacaoCmd\ObterCmd.cs" />
+    <Compile Include="Dominio\Commando\AutenticacaoCmd\Validacao\AtualizarValidacao.cs" />
+    <Compile Include="Dominio\Commando\AutenticacaoCmd\Validacao\DeletarValidacao.cs" />
+    <Compile Include="Dominio\Commando\AutenticacaoCmd\Validacao\FiltrarValidacao.cs" />
+    <Compile Include="Dominio\Commando\AutenticacaoCmd\Validacao\InserirValidacao.cs" />
+    <Compile Include="Dominio\Commando\AutenticacaoCmd\Validacao\LogarValidacao.cs" />
+    <Compile Include="Dominio\Commando\AutenticacaoCmd\Validacao\ObterValidacao.cs" />
     <Compile Include="Dominio\Commando\ClienteCmd\AtualizarCmd.cs" />
     <Compile Include="Dominio\Commando\ClienteCmd\DeletarCmd.cs" />
     <Compile Include="Dominio\Commando\ClienteCmd\FiltrarCmd.cs" />
@@ -87,18 +114,29 @@
     <Compile Include="Dominio\Commando\PaisesCmd\Validacao\FiltrarValidacao.cs" />
     <Compile Include="Dominio\Commando\PaisesCmd\Validacao\InserirValidacao.cs" />
     <Compile Include="Dominio\Commando\PaisesCmd\Validacao\ObterValidacao.cs" />
-    <Compile Include="Dominio\Commando\UsuarioCmd\LogarCmd.cs" />
-    <Compile Include="Dominio\Commando\UsuarioCmd\Validacao\LogarValidacao.cs" />
+    <Compile Include="Dominio\Commando\UsuarioCmd\AtualizarCmd.cs" />
+    <Compile Include="Dominio\Commando\UsuarioCmd\DeletarCmd.cs" />
+    <Compile Include="Dominio\Commando\UsuarioCmd\FiltrarCmd.cs" />
+    <Compile Include="Dominio\Commando\UsuarioCmd\InserirCmd.cs" />
+    <Compile Include="Dominio\Commando\UsuarioCmd\ObterCmd.cs" />
+    <Compile Include="Dominio\Commando\UsuarioCmd\Validacao\AtualizarValidacao.cs" />
+    <Compile Include="Dominio\Commando\UsuarioCmd\Validacao\DeletarValidacao.cs" />
+    <Compile Include="Dominio\Commando\UsuarioCmd\Validacao\FiltrarValidacao.cs" />
+    <Compile Include="Dominio\Commando\UsuarioCmd\Validacao\InserirValidacao.cs" />
+    <Compile Include="Dominio\Commando\UsuarioCmd\Validacao\ObterValidacao.cs" />
+    <Compile Include="Dominio\Entidade\Autenticacao.cs" />
     <Compile Include="Dominio\Entidade\Cliente.cs" />
     <Compile Include="Dominio\Entidade\Contato.cs" />
     <Compile Include="Dominio\Entidade\Usuario.cs" />
     <Compile Include="Dominio\Interfaces\IAutoValidacao.cs" />
     <Compile Include="Dominio\Interfaces\INotificador.cs" />
+    <Compile Include="Dominio\Interfaces\Repositorio\IAutenticacaoRep.cs" />
     <Compile Include="Dominio\Interfaces\Repositorio\Comum\IRepositorioBaseEscrita.cs" />
     <Compile Include="Dominio\Interfaces\Repositorio\Comum\IRepositorioBaseLeitura.cs" />
     <Compile Include="Dominio\Interfaces\Repositorio\IClienteRep.cs" />
     <Compile Include="Dominio\Interfaces\Repositorio\IPaisesRep.cs" />
     <Compile Include="Dominio\Interfaces\Repositorio\IUsuarioRep.cs" />
+    <Compile Include="Dominio\Interfaces\Servico\IAutenticacaoServ.cs" />
     <Compile Include="Dominio\Interfaces\Servico\IClienteServ.cs" />
     <Compile Include="Dominio\Interfaces\Servico\IPaisServ.cs" />
     <Compile Include="Dominio\Interfaces\Servico\IUsuarioServ.cs" />
@@ -106,6 +144,9 @@
     <Compile Include="Dominio\Notificacoes\Notificador.cs" />
     <Compile Include="Dominio\ObjetoDeValor\Banco.cs" />
     <Compile Include="Dominio\ObjetoDeValor\Pais.cs" />
+    <Compile Include="Dominio\Seguranca\GenerateSecretKey.cs" />
+    <Compile Include="Dominio\Seguranca\TokenManager.cs" />
+    <Compile Include="Dominio\Servicos\AutenticacaoServ.cs" />
     <Compile Include="Dominio\Servicos\ClienteServ.cs" />
     <Compile Include="Dominio\Servicos\Comum\BaseService.cs" />
     <Compile Include="Dominio\Servicos\PaisServ.cs" />

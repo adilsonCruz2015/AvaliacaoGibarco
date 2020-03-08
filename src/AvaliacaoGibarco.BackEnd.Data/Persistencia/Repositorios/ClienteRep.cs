@@ -93,7 +93,7 @@ namespace AvaliacaoGibarco.BackEnd.Data.Persistencia.Repositorios
             sql.Append($@"
                          Update { nameof(Cliente) } SET Cnpj = @Cnpj,
                                                         RazaoSocial = @RazaoSocial, 
-                                                        CodigoPais = @CodigoPais)
+                                                        CodigoPais = @CodigoPais,
                                                     WHERE Codigo = @Codigo");
 
             var parametros = new DynamicParameters(new { obj.Codigo });
@@ -123,7 +123,6 @@ namespace AvaliacaoGibarco.BackEnd.Data.Persistencia.Repositorios
         public Cliente[] Get()
         {
             StringBuilder sql = new StringBuilder();
-            StringBuilder sqlFiltro = new StringBuilder();
             var parametros = new DynamicParameters();
 
             sql.Append($@"SELECT 
@@ -150,7 +149,6 @@ namespace AvaliacaoGibarco.BackEnd.Data.Persistencia.Repositorios
         public Cliente Get(int id)
         {
             StringBuilder sql = new StringBuilder();
-            StringBuilder sqlFiltro = new StringBuilder();
             var parametros = new DynamicParameters( new { Codigo = id });
 
             sql.Append($@"SELECT 

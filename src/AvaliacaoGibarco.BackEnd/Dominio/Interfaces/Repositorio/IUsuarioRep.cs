@@ -4,8 +4,11 @@ using AvaliacaoGibarco.BackEnd.Dominio.Interfaces.Repositorio.Comum;
 
 namespace AvaliacaoGibarco.BackEnd.Dominio.Interfaces.Repositorio
 {
-    public interface IUsuarioRep : IRepositorioBaseLeitura<Usuario>
+    public interface IUsuarioRep : IRepositorioBaseEscrita<Usuario>,
+                                   IRepositorioBaseLeitura<Usuario>
     {
-        Usuario Logar(LogarCmd comando);
+        Usuario ObterUserName(string username);
+
+        Usuario[] Filtrar(FiltrarCmd comando);
     }
 }

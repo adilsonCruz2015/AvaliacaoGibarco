@@ -11,7 +11,7 @@ namespace AvaliacaoGibarco.BackEnd.Dominio.Servicos
     public class PaisServ : BaseService, IPaisServ
     {
         public PaisServ(INotificador notificador,
-                          IPaisesRep rep)
+                        IPaisesRep rep)
             :base(notificador)
         {
             _rep = rep;
@@ -65,6 +65,9 @@ namespace AvaliacaoGibarco.BackEnd.Dominio.Servicos
 
             if (ExecutarValidacao(new FiltrarValidacao(), comando))
                 paises = _rep.Filtrar(comando);
+
+            if (Equals(paises, null))
+                Notificar("Registro não encontrado!");
 
             return paises;
         }

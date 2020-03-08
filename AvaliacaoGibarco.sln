@@ -15,8 +15,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AvaliacaoGibarco.BackEnd.Id
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AvaliacaoGibarco.BackEnd.Api", "src\AvaliacaoGibarco.BackEnd.Api\AvaliacaoGibarco.BackEnd.Api.csproj", "{156F11F8-CF18-463C-9A61-969C7BE8AC3C}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0 - Apresntacao", "0 - Apresntacao", "{A651EE09-7AFA-4396-BC87-DF1438348E7F}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

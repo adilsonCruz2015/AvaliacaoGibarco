@@ -17,21 +17,96 @@ namespace AvaliacaoGibarco.BackEnd.Dominio.Servicos
             _rep = rep;
         }
 
-        private readonly IUsuarioRep _rep;
+        private readonly IUsuarioRep _rep;        
 
-        public Usuario Logar(LogarCmd comando)
+        public Usuario ObterUserName(string username)
+        {
+            return _rep.ObterUserName(username);
+        }
+
+        public int Inserir(InserirCmd comando)
+        {
+            int resultado = -1;
+
+            if (ExecutarValidacao(new InserirValidacao(), comando))
+            {
+                Usuario usuario = null;
+                comando.Aplicar(ref usuario);
+
+                resultado = _rep.Insert(usuario);
+                if (resultado < 0)
+                    Notificar("Não foi possível inserir o Usuário");
+            }
+
+            return resultado;
+        }
+
+        public int Atualizar(AtualizarCmd comando)
+        {
+            int resultado = -1;
+
+            if (ExecutarValidacao(new AtualizarValidacao(), comando))
+            {
+                Usuario usuario = _rep.Get(comando.Codigo);
+
+                if (!object.Equals(usuario, null))
+                {
+                    comando.Aplicar(ref usuario);
+                    resultado = _rep.Update(usuario);
+
+                    if (resultado < 0)
+                        Notificar("Não foi possível atualizar o Usuário");
+                }
+                else
+                {
+                    Notificar("Registro não encontrado!");
+                }
+            }
+
+            return resultado;
+        }
+
+        public Usuario Obter(ObterCmd comando)
         {
             Usuario usuario = null;
 
-            if(ExecutarValidacao(new LogarValidacao(), comando))
+            if (ExecutarValidacao(new ObterValidacao(), comando))
             {
-                usuario = _rep.Logar(comando);
+                usuario = _rep.Get(comando.Codigo.Value);
 
                 if (object.Equals(usuario, null))
-                    Notificar("Login ou Senha inválido!");
+                    Notificar("Registro não encontrado!");
             }
 
             return usuario;
+        }
+
+        public Usuario[] Filtrar(FiltrarCmd comando)
+        {
+            Usuario[] usuarios = null;
+
+            if (ExecutarValidacao(new FiltrarValidacao(), comando))
+                usuarios = _rep.Filtrar(comando);
+
+            if (Equals(usuarios, null))
+                Notificar("Registro não encontrado!");
+
+            return usuarios;
+        }
+
+        public int Delete(DeletarCmd comando)
+        {
+            int resultado = -1;
+
+            if (ExecutarValidacao(new DeletarValidacao(), comando))
+            {
+                resultado = _rep.Delete(comando.Codigo.Value);
+
+                if (resultado < 0)
+                    Notificar("Não foi possível excluír o Usuário.");
+            }
+
+            return resultado;
         }
     }
 }

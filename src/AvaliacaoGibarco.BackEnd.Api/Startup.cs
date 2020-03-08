@@ -11,6 +11,7 @@ namespace AvaliacaoGibarco.BackEnd.Api
 
 			WebApiConfig.Register(config);
 			JsonConfig.Register(config);
+			FilterConfig.Register(config);
 			IdCConfig.Register(config);
 
 			SwaggerConfig.Register(config);

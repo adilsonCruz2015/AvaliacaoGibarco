@@ -1,7 +1,9 @@
-﻿using AvaliacaoGibarco.BackEnd.Api.Auxiliar;
+﻿using AvaliacaoGibarco.BackEnd.Api.App_Start.SimpleInjectorCustom;
+using AvaliacaoGibarco.BackEnd.Api.Auxiliar;
 using AvaliacaoGibarco.BackEnd.Data.Persistencia.Interfaces;
 using AvaliacaoGibarco.BackEnd.Dominio.Interfaces;
 using AvaliacaoGibarco.BackEnd.Dominio.Notificacoes;
+using CommonServiceLocator;
 using SimpleInjector;
 using SimpleInjector.Integration.WebApi;
 using SimpleInjector.Lifestyles;
@@ -23,6 +25,10 @@ namespace AvaliacaoGibarco.BackEnd.Api
             container.RegisterWebApiControllers(config);
 
             container.Verify();
+
+            // Adapter for Service Locator
+            var adapter = new SimpleInjectorServiceLocatorAdapter(container);
+            ServiceLocator.SetLocatorProvider(() => adapter);
 
             config.DependencyResolver = new SimpleInjectorWebApiDependencyResolver(container);
         }
