@@ -5,16 +5,12 @@ namespace AvaliacaoGibarco.BackEnd.Dominio.Interfaces.Servico
 {
     public interface IAutenticacaoServ
     {
-        int Inserir(InserirCmd comando);
-
-        int Atualizar(AtualizarCmd comando);
-
-        Autenticacao Obter(ObterCmd comando);
-
-        Autenticacao[] Filtrar(FiltrarCmd comando);
-
-        int Delete(DeletarCmd comando);
-
+        int Atualizar(AtualizarCmd comando);      
+        
         Autenticacao Logar(LogarCmd comando);
+
+        Autenticacao Autenticacao { get; }
+
+        Autenticacao Inicializar(InicializarCmd comando);
     }
 }

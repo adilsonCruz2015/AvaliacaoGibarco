@@ -84,12 +84,14 @@
     <Compile Include="Dominio\Commando\AutenticacaoCmd\AtualizarCmd.cs" />
     <Compile Include="Dominio\Commando\AutenticacaoCmd\DeletarCmd.cs" />
     <Compile Include="Dominio\Commando\AutenticacaoCmd\FiltrarCmd.cs" />
+    <Compile Include="Dominio\Commando\AutenticacaoCmd\InicializarCmd.cs" />
     <Compile Include="Dominio\Commando\AutenticacaoCmd\InserirCmd.cs" />
     <Compile Include="Dominio\Commando\AutenticacaoCmd\LogarCmd.cs" />
     <Compile Include="Dominio\Commando\AutenticacaoCmd\ObterCmd.cs" />
     <Compile Include="Dominio\Commando\AutenticacaoCmd\Validacao\AtualizarValidacao.cs" />
     <Compile Include="Dominio\Commando\AutenticacaoCmd\Validacao\DeletarValidacao.cs" />
     <Compile Include="Dominio\Commando\AutenticacaoCmd\Validacao\FiltrarValidacao.cs" />
+    <Compile Include="Dominio\Commando\AutenticacaoCmd\Validacao\InicializarValidacao.cs" />
     <Compile Include="Dominio\Commando\AutenticacaoCmd\Validacao\InserirValidacao.cs" />
     <Compile Include="Dominio\Commando\AutenticacaoCmd\Validacao\LogarValidacao.cs" />
     <Compile Include="Dominio\Commando\AutenticacaoCmd\Validacao\ObterValidacao.cs" />

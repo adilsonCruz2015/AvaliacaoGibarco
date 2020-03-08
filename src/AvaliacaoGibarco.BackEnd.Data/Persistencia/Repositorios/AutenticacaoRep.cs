@@ -85,6 +85,7 @@ namespace AvaliacaoGibarco.BackEnd.Data.Persistencia.Repositorios
             sql.Append($@"
                          INSERT INTO { nameof(Autenticacao) } (Token, CodigoUsuario, ExpiraEm)
                                 VALUES(@Token, @CodigoUsuario, @ExpiraEm)");
+            sql.Append(" SELECT last_insert_rowid() ");
 
             var parametros = new DynamicParameters();
             parametros.Add("@Token", obj.Token, DbType.AnsiString, size: 1000);

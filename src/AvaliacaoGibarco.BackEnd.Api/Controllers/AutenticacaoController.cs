@@ -23,16 +23,14 @@ namespace AvaliacaoGibarco.BackEnd.Api.Controllers
 
         private readonly IAutenticacaoServ _serv;
 
-        [HttpGet, Route("{codigo}")]
+        [HttpGet, Route]
         [Display(Name = "Obter")]
-        public async Task<HttpResponseMessage> Get([FromUri] ObterCmd parametros)
+        public async Task<HttpResponseMessage> Get()
         {
-            Autenticacao autenticacao = null;
+            if(Equals(_serv.Autenticacao, null))
+                NotificarErro("Acesso não autorizado");
 
-            if (!object.Equals(parametros, null))
-                autenticacao = _serv.Obter(parametros);
-
-            return CustomResponse(autenticacao);
+            return CustomResponse(_serv.Autenticacao);
         }
 
         [AllowAnonymous]

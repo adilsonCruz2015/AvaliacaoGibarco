@@ -23,31 +23,7 @@ namespace AvaliacaoGibarco.BackEnd.Dominio.Servicos
         private readonly IAutenticacaoRep _rep;
         private readonly IUsuarioRep _usuarioRep;
 
-        public int Inserir(InserirCmd comando)
-        {
-            int resultado = -1;
-
-            if (ExecutarValidacao(new InserirValidacao(), comando))
-            {
-                Autenticacao autenticacao = null;
-                Usuario usuario = _usuarioRep.Get(comando.CodigoUsuario);
-
-                if(!Equals(usuario, null))
-                {
-                    comando.Aplicar(ref autenticacao, usuario);
-
-                    resultado = _rep.Insert(autenticacao);
-                    if (resultado < 0)
-                        Notificar("Não foi possível inserir a Autenticacao.");
-                }
-                else
-                {
-                    Notificar("Usuário não encontrado.");
-                }
-            }
-
-            return resultado;
-        }
+        public Autenticacao Autenticacao { get; protected internal set; }
 
         public int Atualizar(AtualizarCmd comando)
         {
@@ -83,49 +59,6 @@ namespace AvaliacaoGibarco.BackEnd.Dominio.Servicos
             return resultado;
         }
 
-        public Autenticacao Obter(ObterCmd comando)
-        {
-            Autenticacao autenticacao = null;
-
-            if (ExecutarValidacao(new ObterValidacao(), comando))
-            {
-                autenticacao = _rep.Get(comando.Codigo.Value);
-
-                if (object.Equals(autenticacao, null))
-                    Notificar("Registro não encontrado!");
-            }
-
-            return autenticacao;
-        }
-
-        public Autenticacao[] Filtrar(FiltrarCmd comando)
-        {
-            Autenticacao[] autenticacoes = null;
-
-            if (ExecutarValidacao(new FiltrarValidacao(), comando))
-                autenticacoes = _rep.Filtrar(comando);
-
-            if (Equals(autenticacoes, null))
-                Notificar("Registro não encontrado!");
-
-            return autenticacoes;
-        }
-
-        public int Delete(DeletarCmd comando)
-        {
-            int resultado = -1;
-
-            if (ExecutarValidacao(new DeletarValidacao(), comando))
-            {
-                resultado = _rep.Delete(comando.Codigo.Value);
-
-                if (resultado < 0)
-                    Notificar("Não foi possível excluír a Autenticação");
-            }
-
-            return resultado;
-        }
-
         public Autenticacao Logar(LogarCmd comando)
         {
             Autenticacao resultado = null;
@@ -144,6 +77,15 @@ namespace AvaliacaoGibarco.BackEnd.Dominio.Servicos
                     _rep.Insert(resultado);
                 }
             }
+
+            return (Autenticacao = resultado); ;
+        }
+
+        public Autenticacao Inicializar(InicializarCmd comando)
+        {
+            Autenticacao resultado = null;
+
+
 
             return resultado;
         }
