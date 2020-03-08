@@ -81,6 +81,8 @@ namespace AvaliacaoGibarco.BackEnd.Data.Persistencia.Repositorios
 
         public int Insert(Autenticacao obj)
         {
+            int resultado = -1;
+
             StringBuilder sql = new StringBuilder();
             sql.Append($@"
                          INSERT INTO { nameof(Autenticacao) } (Token, CodigoUsuario, ExpiraEm)
@@ -92,9 +94,11 @@ namespace AvaliacaoGibarco.BackEnd.Data.Persistencia.Repositorios
             parametros.Add("@CodigoUsuario", obj.Usuario.Codigo, DbType.Int32);
             parametros.Add("@ExpiraEm", obj.ExpiraEm, DbType.Int32);
 
-            return _conexao.Sessao.Execute(sql.ToString(),
+            resultado = _conexao.Sessao.Execute(sql.ToString(),
                                            parametros,
                                            _conexao.Transicao);
+
+            return resultado;
         }
 
         public Usuario Logar(LogarCmd comando)
