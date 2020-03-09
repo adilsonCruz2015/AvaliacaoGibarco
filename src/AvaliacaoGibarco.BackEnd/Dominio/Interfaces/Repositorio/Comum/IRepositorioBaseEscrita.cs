@@ -3,7 +3,7 @@
     public interface IRepositorioBaseEscrita<TEntidade>
         where TEntidade : class
     {
-        int Insert(TEntidade obj);
+        TEntidade Insert(TEntidade obj);
 
         int Update(TEntidade obj);
 

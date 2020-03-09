@@ -98,8 +98,8 @@ namespace AvaliacaoGibarco.BackEnd.Dominio.Servicos
                     Cliente cliente = null;
                     comando.Aplicar(ref cliente, pais);
 
-                    resultado = _rep.Insert(cliente);
-                    if (resultado < 0)
+                    cliente = _rep.Insert(cliente);
+                    if (cliente.Codigo <= 0)
                         Notificar("Não foi possível inserir o Cliente");
                 }
                 else

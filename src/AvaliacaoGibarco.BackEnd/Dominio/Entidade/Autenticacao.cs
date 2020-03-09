@@ -3,7 +3,10 @@ namespace AvaliacaoGibarco.BackEnd.Dominio.Entidade
 {
     public class Autenticacao
     {
-        protected internal Autenticacao() { }
+        protected internal Autenticacao() 
+        {
+            ExpiraEm = 60;
+        }
 
         public Autenticacao(Usuario usuario)
             :this()

@@ -65,7 +65,7 @@ namespace AvaliacaoGibarco.BackEnd.Data.Persistencia.Repositorios
                                 U.Email
                           FROM { nameof(Autenticacao)} AS A ");
             sql.Append($"INNER JOIN { nameof(Usuario)} AS U ON U.Codigo = A.CodigoUsuario ");
-            sql.Append(" WHERE C.Codigo = @Codigo");
+            sql.Append(" WHERE A.Codigo = @Codigo");
 
             return _conexao.Sessao.Query<Autenticacao, Usuario, Autenticacao>(sql.ToString(),
                 (autenticacao, usuario) =>
@@ -79,15 +79,15 @@ namespace AvaliacaoGibarco.BackEnd.Data.Persistencia.Repositorios
                 ).FirstOrDefault();
         }
 
-        public int Insert(Autenticacao obj)
+        public Autenticacao Insert(Autenticacao obj)
         {
             int resultado = -1;
 
             StringBuilder sql = new StringBuilder();
+            StringBuilder sqlLastRow = new StringBuilder();
             sql.Append($@"
                          INSERT INTO { nameof(Autenticacao) } (Token, CodigoUsuario, ExpiraEm)
                                 VALUES(@Token, @CodigoUsuario, @ExpiraEm)");
-            sql.Append(" SELECT last_insert_rowid() ");
 
             var parametros = new DynamicParameters();
             parametros.Add("@Token", obj.Token, DbType.AnsiString, size: 1000);
@@ -95,10 +95,19 @@ namespace AvaliacaoGibarco.BackEnd.Data.Persistencia.Repositorios
             parametros.Add("@ExpiraEm", obj.ExpiraEm, DbType.Int32);
 
             resultado = _conexao.Sessao.Execute(sql.ToString(),
-                                           parametros,
-                                           _conexao.Transicao);
+                                                parametros,
+                                               _conexao.Transicao);
 
-            return resultado;
+            if(resultado > 0)
+            {
+                sqlLastRow.Append("SELECT last_insert_rowid()");
+                object id = _conexao.Sessao.ExecuteScalar(sqlLastRow.ToString(), new { }, _conexao.Transicao);
+
+                if (!Equals(id, null))
+                    obj.Codigo = int.Parse(id.ToString());
+            }
+
+            return obj;
         }
 
         public Usuario Logar(LogarCmd comando)
@@ -132,7 +141,7 @@ namespace AvaliacaoGibarco.BackEnd.Data.Persistencia.Repositorios
             var parametros = new DynamicParameters(new { obj.Codigo });
 
             parametros.Add("@Token", obj.Token, DbType.AnsiString, size: 1000);
-            parametros.Add("@CodigoPais", obj.Usuario.Codigo, DbType.Int32);
+            parametros.Add("@CodigoUsuario", obj.Usuario.Codigo, DbType.Int32);
             parametros.Add("@ExpiraEm", obj.ExpiraEm, DbType.Int32);
 
             return _conexao.Sessao.Execute(sql.ToString(),

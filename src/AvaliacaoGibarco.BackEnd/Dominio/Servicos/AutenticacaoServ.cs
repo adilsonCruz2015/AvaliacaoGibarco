@@ -3,6 +3,7 @@ using AvaliacaoGibarco.BackEnd.Dominio.Commando.AutenticacaoCmd.Validacao;
 using AvaliacaoGibarco.BackEnd.Dominio.Entidade;
 using AvaliacaoGibarco.BackEnd.Dominio.Interfaces;
 using AvaliacaoGibarco.BackEnd.Dominio.Interfaces.Repositorio;
+using AvaliacaoGibarco.BackEnd.Dominio.Interfaces.Seguranca;
 using AvaliacaoGibarco.BackEnd.Dominio.Interfaces.Servico;
 using AvaliacaoGibarco.BackEnd.Dominio.Seguranca;
 using AvaliacaoGibarco.BackEnd.Dominio.Servicos.Comum;
@@ -13,15 +14,18 @@ namespace AvaliacaoGibarco.BackEnd.Dominio.Servicos
     {
         public AutenticacaoServ(INotificador notificador,
                                 IAutenticacaoRep rep,
-                                IUsuarioRep usuarioRep)
+                                IUsuarioRep usuarioRep,
+                                ITokenManager token)
             :base(notificador)
         {
             _rep = rep;
             _usuarioRep = usuarioRep;
+            _token = token;
         }
 
         private readonly IAutenticacaoRep _rep;
         private readonly IUsuarioRep _usuarioRep;
+        private readonly ITokenManager _token;
 
         public Autenticacao Autenticacao { get; protected internal set; }
 
@@ -73,8 +77,17 @@ namespace AvaliacaoGibarco.BackEnd.Dominio.Servicos
                 else
                 {
                     resultado = new Autenticacao(usuario);
-                    resultado.Token = TokenManager.GenerateToken(comando.Login);
-                    _rep.Insert(resultado);
+                    resultado = _rep.Insert(resultado);
+
+                    if (resultado.Codigo < 0)
+                    {
+                        Notificar("Erro ao inserir a Autenticação!");
+                    }
+                    else
+                    {
+                        AplicarToken(resultado);
+                        _rep.Update(resultado);
+                    }
                 }
             }
 
@@ -84,10 +97,20 @@ namespace AvaliacaoGibarco.BackEnd.Dominio.Servicos
         public Autenticacao Inicializar(InicializarCmd comando)
         {
             Autenticacao resultado = null;
+            int codigo = 0;
 
+            if(ExecutarValidacao(new InicializarValidacao(), comando))
+            {
+                codigo = _token.Decode(comando.Token);
+                resultado = _rep.Get(codigo);
+            }
 
+            return (Autenticacao = resultado);
+        }
 
-            return resultado;
+        private void AplicarToken(Autenticacao autenticacao)
+        {
+            autenticacao.Token = _token.GenerateToken(autenticacao);
         }
     }
 }

@@ -90,9 +90,12 @@ namespace AvaliacaoGibarco.BackEnd.Data.Persistencia.Repositorios
                                                _conexao.Transicao).FirstOrDefault();
         }
 
-        public int Insert(Pais obj)
+        public Pais Insert(Pais obj)
         {
+            int resultado = -1;
+
             StringBuilder sql = new StringBuilder();
+            StringBuilder sqlLastRow = new StringBuilder();
             sql.Append($@"
                          INSERT INTO { nameof(Pais) } (Descricao)
                                 VALUES(@Descricao)");
@@ -100,7 +103,18 @@ namespace AvaliacaoGibarco.BackEnd.Data.Persistencia.Repositorios
             var parametros = new DynamicParameters();
             parametros.Add("@Descricao", obj.Descricao, DbType.AnsiString, size: 100);
 
-            return _conexao.Sessao.Execute(sql.ToString(), parametros, _conexao.Transicao);
+            resultado = _conexao.Sessao.Execute(sql.ToString(), parametros, _conexao.Transicao);
+
+            if (resultado > 0)
+            {
+                sqlLastRow.Append("SELECT last_insert_rowid()");
+                object id = _conexao.Sessao.ExecuteScalar(sqlLastRow.ToString(), new { }, _conexao.Transicao);
+
+                if (!Equals(id, null))
+                    obj.Codigo = int.Parse(id.ToString());
+            }
+
+            return obj;
 
         }
 

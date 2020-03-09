@@ -69,9 +69,12 @@ namespace AvaliacaoGibarco.BackEnd.Data.Persistencia.Repositorios
            
         }
 
-        public int Insert(Cliente obj)
+        public Cliente Insert(Cliente obj)
         {
+            int resultado = -1;
+
             StringBuilder sql = new StringBuilder();
+            StringBuilder sqlLastRow = new StringBuilder();
             sql.Append($@"
                          INSERT INTO { nameof(Cliente) } (Cnpj, RazaoSocial, CodigoPais)
                                 VALUES(@Cnpj, @RazaoSocial, @CodigoPais)");
@@ -82,9 +85,20 @@ namespace AvaliacaoGibarco.BackEnd.Data.Persistencia.Repositorios
             parametros.Add("@RazaoSocial", obj.RazaoSocial, DbType.AnsiString, size: 255);
             parametros.Add("@CodigoPais", obj.Pais.Codigo, DbType.Int32);
 
-            return _conexao.Sessao.Execute(sql.ToString(),
-                                           parametros,
-                                           _conexao.Transicao);
+            resultado = _conexao.Sessao.Execute(sql.ToString(),
+                                                parametros,
+                                               _conexao.Transicao);
+
+            if (resultado > 0)
+            {
+                sqlLastRow.Append("SELECT last_insert_rowid()");
+                object id = _conexao.Sessao.ExecuteScalar(sqlLastRow.ToString(), new { }, _conexao.Transicao);
+
+                if (!Equals(id, null))
+                    obj.Codigo = int.Parse(id.ToString());
+            }
+
+            return obj;
         }
 
         public int Update(Cliente obj)

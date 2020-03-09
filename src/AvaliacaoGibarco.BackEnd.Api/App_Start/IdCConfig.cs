@@ -2,6 +2,7 @@
 using AvaliacaoGibarco.BackEnd.Api.Auxiliar;
 using AvaliacaoGibarco.BackEnd.Data.Persistencia.Interfaces;
 using AvaliacaoGibarco.BackEnd.Dominio.Interfaces;
+using AvaliacaoGibarco.BackEnd.Dominio.Interfaces.Seguranca;
 using AvaliacaoGibarco.BackEnd.Dominio.Notificacoes;
 using CommonServiceLocator;
 using SimpleInjector;
@@ -20,6 +21,7 @@ namespace AvaliacaoGibarco.BackEnd.Api
             container.Options.DefaultScopedLifestyle = new AsyncScopedLifestyle();
             container.Register<INotificador, Notificador>(Lifestyle.Scoped);
             container.Register<IResolverConexao, ResolverConexao>(Lifestyle.Scoped);
+            container.Register<ITokenManager, TokenManager>(Lifestyle.Scoped);
 
             Idc.IdC.Carregar(container);
             container.RegisterWebApiControllers(config);

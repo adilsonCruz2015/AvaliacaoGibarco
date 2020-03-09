@@ -62,9 +62,12 @@ namespace AvaliacaoGibarco.BackEnd.Data.Persistencia.Repositorios
                                                _conexao.Transicao).FirstOrDefault();
         }
 
-        public int Insert(Usuario obj)
+        public Usuario Insert(Usuario obj)
         {
+            int resultado = -1;
+
             StringBuilder sql = new StringBuilder();
+            StringBuilder sqlLastRow = new StringBuilder();
             sql.Append($@"
                          INSERT INTO { nameof(Usuario) } (Email, Senha)
                                 VALUES(@Email, @Senha)");
@@ -74,9 +77,20 @@ namespace AvaliacaoGibarco.BackEnd.Data.Persistencia.Repositorios
             parametros.Add("@Email", obj.Email, DbType.AnsiString, size: 255);
             parametros.Add("@Senha", obj.Senha, DbType.AnsiString, size: 20);
 
-            return _conexao.Sessao.Execute(sql.ToString(),
-                                           parametros,
-                                           _conexao.Transicao);
+            resultado = _conexao.Sessao.Execute(sql.ToString(),
+                                                parametros,
+                                                _conexao.Transicao);
+
+            if (resultado > 0)
+            {
+                sqlLastRow.Append("SELECT last_insert_rowid()");
+                object id = _conexao.Sessao.ExecuteScalar(sqlLastRow.ToString(), new { }, _conexao.Transicao);
+
+                if (!Equals(id, null))
+                    obj.Codigo = int.Parse(id.ToString());
+            }
+
+            return obj;
         }
 
         public int Update(Usuario obj)

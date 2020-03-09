@@ -33,8 +33,8 @@ namespace AvaliacaoGibarco.BackEnd.Dominio.Servicos
                 Usuario usuario = null;
                 comando.Aplicar(ref usuario);
 
-                resultado = _rep.Insert(usuario);
-                if (resultado < 0)
+                usuario = _rep.Insert(usuario);
+                if (usuario.Codigo <= 0)
                     Notificar("Não foi possível inserir o Usuário");
             }
 

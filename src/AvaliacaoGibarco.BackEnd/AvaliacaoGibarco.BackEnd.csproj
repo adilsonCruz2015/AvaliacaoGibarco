@@ -138,6 +138,7 @@
     <Compile Include="Dominio\Interfaces\Repositorio\IClienteRep.cs" />
     <Compile Include="Dominio\Interfaces\Repositorio\IPaisesRep.cs" />
     <Compile Include="Dominio\Interfaces\Repositorio\IUsuarioRep.cs" />
+    <Compile Include="Dominio\Interfaces\Seguranca\ITokenManager.cs" />
     <Compile Include="Dominio\Interfaces\Servico\IAutenticacaoServ.cs" />
     <Compile Include="Dominio\Interfaces\Servico\IClienteServ.cs" />
     <Compile Include="Dominio\Interfaces\Servico\IPaisServ.cs" />

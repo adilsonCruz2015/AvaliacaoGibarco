@@ -1,4 +1,7 @@
-﻿using AvaliacaoGibarco.BackEnd.Dominio.Interfaces.Servico;
+﻿using AvaliacaoGibarco.BackEnd.Dominio.Commando.AutenticacaoCmd;
+using AvaliacaoGibarco.BackEnd.Dominio.Entidade;
+using AvaliacaoGibarco.BackEnd.Dominio.Interfaces.Seguranca;
+using AvaliacaoGibarco.BackEnd.Dominio.Interfaces.Servico;
 using AvaliacaoGibarco.BackEnd.Dominio.Seguranca;
 using CommonServiceLocator;
 using System.Collections.Generic;
@@ -32,7 +35,7 @@ namespace AvaliacaoGibarco.BackEnd.Api.Filters
             var principal = AuthJwtToken(autorizacao);
 
             if (Equals(principal, null))
-                return false;
+                return false;           
 
 
             return !Equals(principal, null);
@@ -52,11 +55,12 @@ namespace AvaliacaoGibarco.BackEnd.Api.Filters
                 new { Mensagem = "Acesso não autorizado" });
         }
 
-        private static bool ValidateToken(string token, out string username)
+        private bool ValidateToken(string token, out string username)
         {
             username = null;
+            var tokenManager = ServiceLocator.Current.GetInstance<ITokenManager>();
 
-            var simplePrinciple = TokenManager.GetPrincipal(token);
+            var simplePrinciple = tokenManager.GetPrincipal(token);
             if (Equals(simplePrinciple, null))
                 return false;
 
@@ -73,11 +77,22 @@ namespace AvaliacaoGibarco.BackEnd.Api.Filters
             if (string.IsNullOrWhiteSpace(username))
                 return false;
 
-            IUsuarioServ serv = ServiceLocator.Current.GetInstance<IUsuarioServ>();
-            var userBD = serv.ObterUserName(username);
+            Autenticacao autenticacao = Iniciar(token);
 
-            if (Equals(userBD, null))
+            if(Equals(autenticacao, null))
+            {
                 return false;
+            }
+            else 
+            {
+                IUsuarioServ serv = ServiceLocator.Current.GetInstance<IUsuarioServ>();
+                var userBD = serv.ObterUserName(autenticacao.Usuario.Email);
+
+                if (Equals(userBD, null))
+                    return false;
+            }
+
+            
 
             return true;
         }
@@ -100,6 +115,14 @@ namespace AvaliacaoGibarco.BackEnd.Api.Filters
             }
 
             return null;
+        }
+
+        protected Autenticacao Iniciar(string token)
+        {
+            var serv = ServiceLocator.Current.GetInstance<IAutenticacaoServ>();
+            Autenticacao autenticacao = serv.Inicializar(new InicializarCmd() { Token = token });
+
+            return autenticacao;
         }
     }
 }

@@ -81,8 +81,8 @@ namespace AvaliacaoGibarco.BackEnd.Dominio.Servicos
                 Pais pais = null;
                 comando.Aplicar(ref pais);
 
-                resultado = _rep.Insert(pais);
-                if (resultado < 0)
+                pais = _rep.Insert(pais);
+                if (pais.Codigo <= 0)
                     Notificar("Não foi possível inserir o País");
             }
 
