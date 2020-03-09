@@ -11,6 +11,10 @@ using System.Threading.Tasks;
 
 namespace AvaliacaoGibarco.BackEnd.Api.Auxiliar
 {
+    /// <summary>
+    /// Descrição de onde peguei as informações abaixo
+    /// https://simpleinjector.readthedocs.io/en/latest/webapiintegration.html
+    /// </summary>
     public class TokenValidationHandler : DelegatingHandler
     {
         private static bool TryRetrieveToken(HttpRequestMessage request, out string token)
