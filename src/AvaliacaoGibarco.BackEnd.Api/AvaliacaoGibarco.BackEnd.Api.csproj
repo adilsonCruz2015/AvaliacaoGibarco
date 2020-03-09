@@ -166,11 +166,13 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdCConfig.cs" />
     <Compile Include="App_Start\JsonConfig.cs" />
+    <Compile Include="App_Start\SimpleInjectorCustom\DelegatingHandlerProxy.cs" />
     <Compile Include="App_Start\SimpleInjectorCustom\SimpleInjectorServiceLocatorAdapter.cs" />
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Auxiliar\ResolverConexao.cs" />
     <Compile Include="Auxiliar\TokenManager.cs" />
+    <Compile Include="Auxiliar\TokenValidationHandler.cs" />
     <Compile Include="Controllers\AutenticacaoController.cs" />
     <Compile Include="Controllers\ClienteController.cs" />
     <Compile Include="Controllers\MainController.cs" />

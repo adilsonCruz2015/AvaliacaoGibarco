@@ -33,6 +33,7 @@ namespace AvaliacaoGibarco.BackEnd.Api
             ServiceLocator.SetLocatorProvider(() => adapter);
 
             config.DependencyResolver = new SimpleInjectorWebApiDependencyResolver(container);
+            config.MessageHandlers.Add(new DelegatingHandlerProxy<TokenValidationHandler>(container));
         }
     }
 }

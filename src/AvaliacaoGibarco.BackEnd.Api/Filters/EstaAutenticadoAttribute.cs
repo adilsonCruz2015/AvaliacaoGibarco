@@ -77,7 +77,8 @@ namespace AvaliacaoGibarco.BackEnd.Api.Filters
             if (string.IsNullOrWhiteSpace(username))
                 return false;
 
-            Autenticacao autenticacao = Iniciar(token);
+            IAutenticacaoServ autenticacaoServ = ServiceLocator.Current.GetInstance<IAutenticacaoServ>();
+            Autenticacao autenticacao = autenticacaoServ.Autenticacao;
 
             if(Equals(autenticacao, null))
             {
@@ -90,9 +91,7 @@ namespace AvaliacaoGibarco.BackEnd.Api.Filters
 
                 if (Equals(userBD, null))
                     return false;
-            }
-
-            
+            }            
 
             return true;
         }
