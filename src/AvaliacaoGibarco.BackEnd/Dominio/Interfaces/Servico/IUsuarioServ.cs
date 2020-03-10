@@ -1,5 +1,6 @@
 ﻿using AvaliacaoGibarco.BackEnd.Dominio.Commando.UsuarioCmd;
 using AvaliacaoGibarco.BackEnd.Dominio.Entidade;
+using AvaliacaoGibarco.BackEnd.Dominio.ObjetoDeValor;
 
 namespace AvaliacaoGibarco.BackEnd.Dominio.Interfaces.Servico
 {
@@ -16,5 +17,9 @@ namespace AvaliacaoGibarco.BackEnd.Dominio.Interfaces.Servico
         Usuario[] Filtrar(FiltrarCmd comando);
 
         int Delete(DeletarCmd comando);
+
+        Status ObterStatus(string nome);
+
+        NivelAcesso ObterNivelAcesso(int codigo);
     }
 }

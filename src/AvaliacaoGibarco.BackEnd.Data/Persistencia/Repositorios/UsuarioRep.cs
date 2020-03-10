@@ -24,28 +24,55 @@ namespace AvaliacaoGibarco.BackEnd.Data.Persistencia.Repositorios
         {
             StringBuilder sql = new StringBuilder();
             sql.Append($@"SELECT 
-                                Codigo,
-                                Email,
-                                Senha
-                          FROM { nameof(Usuario)} ");
+                                U.Codigo,
+                                U.Email,
+                                U.Senha,
+                                U.CriadoEm
+                                U.AlteradoEm,
+                                S.Codigo,
+                                S.Nome,
+                                S.Descricao,
+                                S.CriadoEm,
+                                S.AlteradoEm
+                          FROM { nameof(Usuario)} As U ");
+            sql.Append($"INNER JOIN { nameof(Status)} AS S ON S.Codigo = U.CodigoStatus ");
 
-            return _conexao.Sessao.Query<Usuario>(sql.ToString(),
-                                               new { },
-                                               _conexao.Transicao).ToArray();
+            return _conexao.Sessao.Query<Usuario, Status, Usuario>(sql.ToString(),
+                (usuario, status) => 
+                {
+                    usuario.Status = status;
+                    return usuario;
+                },
+                new { },
+                _conexao.Transicao).ToArray();
         }
 
         public Usuario Get(int id)
         {
             StringBuilder sql = new StringBuilder();
             sql.Append($@"SELECT 
-                                Codigo,
-                                Email,
-                                Senha
-                          FROM { nameof(Usuario)} WHERE Codigo = @Codigo ");
+                                U.Codigo,
+                                U.Email,
+                                U.Senha,
+                                U.CriadoEm
+                                U.AlteradoEm,
+                                S.Codigo,
+                                S.Nome,
+                                S.Descricao,
+                                S.CriadoEm,
+                                S.AlteradoEm
+                          FROM { nameof(Usuario)} As U ");
+            sql.Append($"INNER JOIN { nameof(Status)} AS S ON S.Codigo = U.CodigoStatus ");
+            sql.Append(" WHERE U.Codigo = @Codigo");
 
-            return _conexao.Sessao.Query<Usuario>(sql.ToString(),
-                                               new { Codigo = id },
-                                               _conexao.Transicao).FirstOrDefault();
+            return _conexao.Sessao.Query<Usuario, Status, Usuario>(sql.ToString(),
+                (usuario, status) =>
+                {
+                    usuario.Status = status;
+                    return usuario;
+                },
+                new { Codigo = id },
+                _conexao.Transicao).FirstOrDefault();
         }
 
         public Usuario ObterUserName(string username)
@@ -54,7 +81,9 @@ namespace AvaliacaoGibarco.BackEnd.Data.Persistencia.Repositorios
             sql.Append($@"SELECT 
                                 Codigo,
                                 Email,
-                                Senha
+                                Senha,
+                                CriadoEm
+                                AlteradoEm,
                           FROM { nameof(Usuario)} WHERE Email = @Email ");
 
             return _conexao.Sessao.Query<Usuario>(sql.ToString(),
@@ -69,8 +98,8 @@ namespace AvaliacaoGibarco.BackEnd.Data.Persistencia.Repositorios
             StringBuilder sql = new StringBuilder();
             StringBuilder sqlLastRow = new StringBuilder();
             sql.Append($@"
-                         INSERT INTO { nameof(Usuario) } (Email, Senha)
-                                VALUES(@Email, @Senha)");
+                         INSERT INTO { nameof(Usuario) } (Nome, Email, Senha, CodigoStatus, CriadoEm, AlteradoEm)
+                                VALUES(@Nome, @Email, @Senha, @CodigoStatus, @CriadoEm, @AlteradoEm)");
 
             var parametros = new DynamicParameters();
 
@@ -130,12 +159,45 @@ namespace AvaliacaoGibarco.BackEnd.Data.Persistencia.Repositorios
             var parametros = new DynamicParameters();
 
             sql.Append($@"SELECT 
-                                Codigo,
-                                Email,
-                                Senha
-                          FROM { nameof(Usuario)} WHERE Codigo = @Codigo ");
+                                U.Codigo,
+                                U.Email,
+                                U.Senha,
+                                U.CriadoEm
+                                U.AlteradoEm,
+                                S.Codigo,
+                                S.Nome,
+                                S.Descricao,
+                                S.CriadoEm,
+                                S.AlteradoEm
+                          FROM { nameof(Usuario)} As U ");
+            sql.Append($"INNER JOIN { nameof(Status)} AS S ON S.Codigo = U.CodigoStatus ");
+            sql.Append($"INNER JOIN { nameof(NivelAcesso)} AS N ON N.Codigo = U.CodigoNivel ");
 
-            parametros.Add("@Email", comando.Email, DbType.AnsiString, size: 255);
+            if (!string.IsNullOrEmpty(comando.Email))
+            {
+                sqlFiltro.Append(" AND U.Email = @Email ");
+                parametros.Add("@Email", comando.Email, DbType.AnsiString, size: 255);
+            }
+
+            if (!string.IsNullOrEmpty(comando.Nome))
+            {
+                sqlFiltro.Append(" AND U.Nome = @Nome ");
+                parametros.Add("@Nome", comando.Nome, DbType.AnsiString, size: 255);
+            }
+
+            if (comando.Status > 0)
+            {
+                sqlFiltro.Append(" AND S.Codigo = @CodigoStatus ");
+                parametros.Add("@CodigoStatus", comando.Status, DbType.Int32);
+            }
+
+            if (comando.NivelAcesso > 0)
+            {
+                sqlFiltro.Append(" AND S.Codigo = @CodigoStatus ");
+                parametros.Add("@CodigoStatus", comando.Status, DbType.Int32);
+            }
+
+
 
             return _conexao.Sessao.Query<Usuario>(sql.ToString(),
                                                parametros,

@@ -4,20 +4,29 @@ using AvaliacaoGibarco.BackEnd.Dominio.Entidade;
 using AvaliacaoGibarco.BackEnd.Dominio.Interfaces;
 using AvaliacaoGibarco.BackEnd.Dominio.Interfaces.Repositorio;
 using AvaliacaoGibarco.BackEnd.Dominio.Interfaces.Servico;
+using AvaliacaoGibarco.BackEnd.Dominio.ObjetoDeValor;
 using AvaliacaoGibarco.BackEnd.Dominio.Servicos.Comum;
+using System.Linq;
+using Cmd = AvaliacaoGibarco.BackEnd.Dominio.Commando;
 
 namespace AvaliacaoGibarco.BackEnd.Dominio.Servicos
 {
     public class UsuarioServ : BaseService, IUsuarioServ
     {
         public UsuarioServ(INotificador notificador,
-                          IUsuarioRep rep)
+                          IUsuarioRep rep,
+                          IStatusRep statusRep,
+                          INivelAcessoRep nivelAcessoRep)
             : base(notificador)
         {
             _rep = rep;
+            _statusRep = statusRep;
+            _nivelAcessoRep = nivelAcessoRep;
         }
 
-        private readonly IUsuarioRep _rep;        
+        private readonly IUsuarioRep _rep;
+        private readonly IStatusRep _statusRep;
+        private readonly INivelAcessoRep _nivelAcessoRep;
 
         public Usuario ObterUserName(string username)
         {
@@ -31,11 +40,29 @@ namespace AvaliacaoGibarco.BackEnd.Dominio.Servicos
             if (ExecutarValidacao(new InserirValidacao(), comando))
             {
                 Usuario usuario = null;
-                comando.Aplicar(ref usuario);
+                Status status = ObterStatus("Ativo");
+                NivelAcesso nivelAcesso = null;
 
-                usuario = _rep.Insert(usuario);
-                if (usuario.Codigo <= 0)
-                    Notificar("Não foi possível inserir o Usuário");
+                if (!HaNotificacoes())
+                {
+                    nivelAcesso = ObterNivelAcesso(comando.CodigoNivelAcesso);
+
+                    if(!Equals(nivelAcesso))
+                    {
+                        comando.Aplicar(ref usuario, status, nivelAcesso);
+
+                        usuario = _rep.Insert(usuario);
+                        if (usuario.Codigo <= 0)
+                        {
+                            comando.Desfazer(ref usuario);
+                            Notificar("Não foi possível inserir o Usuário");
+                        }
+                    }
+                    else
+                    {
+                        Notificar("Não foi possível encontrar o nível de acesso.");
+                    }
+                }
             }
 
             return resultado;
@@ -47,19 +74,39 @@ namespace AvaliacaoGibarco.BackEnd.Dominio.Servicos
 
             if (ExecutarValidacao(new AtualizarValidacao(), comando))
             {
-                Usuario usuario = _rep.Get(comando.Codigo);
+                Status status = _statusRep.Get(comando.CodigoStatus);
 
-                if (!object.Equals(usuario, null))
+                if(!Equals(status, null))
                 {
-                    comando.Aplicar(ref usuario);
-                    resultado = _rep.Update(usuario);
+                    NivelAcesso nivelAcesso = _nivelAcessoRep.Get(comando.CodigoNivelAcesso);
 
-                    if (resultado < 0)
-                        Notificar("Não foi possível atualizar o Usuário");
+                    if(!Equals(nivelAcesso, null))
+                    {
+                        Usuario usuario = _rep.Get(comando.Codigo);
+                        if (!object.Equals(usuario, null))
+                        {
+                            comando.Aplicar(ref usuario, status, nivelAcesso);
+                            resultado = _rep.Update(usuario);
+
+                            if (resultado < 0)
+                            {
+                                comando.Desfazer(ref usuario);
+                                Notificar("Não foi possível atualizar o usuário");
+                            }
+                        }
+                        else
+                        {
+                            Notificar("Registro não encontrado!");
+                        }
+                    }
+                    else
+                    {
+                        Notificar("Não foi possível encontrar o nível de acesso.");
+                    }
                 }
                 else
                 {
-                    Notificar("Registro não encontrado!");
+                    Notificar("Não foi possível encontrar o status.");
                 }
             }
 
@@ -107,6 +154,26 @@ namespace AvaliacaoGibarco.BackEnd.Dominio.Servicos
             }
 
             return resultado;
+        }
+
+        public Status ObterStatus(string nome)
+        {
+            Status status = _statusRep.Filtrar(new Cmd.StatusCmd.FiltrarCmd() { Descricao = nome }).FirstOrDefault();
+
+            if (Equals(status, null))
+                Notificar("Não foi possível encontrar o status");
+
+            return status;
+        }
+
+        public NivelAcesso ObterNivelAcesso(int codigo)
+        {
+            NivelAcesso nivelAcesso = _nivelAcessoRep.Get(codigo);
+
+            if (Equals(nivelAcesso, null))
+                Notificar("Não foi possível encontrar o nível de acesso.");
+
+            return nivelAcesso;
         }
     }
 }

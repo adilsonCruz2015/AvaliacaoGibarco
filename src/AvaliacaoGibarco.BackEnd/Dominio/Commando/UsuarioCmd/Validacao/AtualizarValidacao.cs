@@ -19,9 +19,9 @@ namespace AvaliacaoGibarco.BackEnd.Dominio.Commando.UsuarioCmd.Validacao
                 .EmailAddress()
                 .WithMessage("O campo {PropertyName} não é válido.");
 
-            RuleFor(s => s.Senha)
+            RuleFor(n => n.Nome)
                 .NotEmpty().WithMessage("O campo {PropertyName} precisa ser fornecido")
-                .Length(3, 20)
+                .Length(3, 255)
                 .WithMessage("O campo {PropertyName} precisa ter entre {MinLength} e {MaxLength} caracteres");
         }
     }

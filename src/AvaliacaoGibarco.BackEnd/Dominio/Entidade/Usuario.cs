@@ -5,13 +5,22 @@ namespace AvaliacaoGibarco.BackEnd.Dominio.Entidade
 {
     public class Usuario
     {
-        public Usuario() {  }
+        protected Usuario() 
+        {
+            CriadoEm = DateTime.Now;
+            AlteradoEm = DateTime.Now;
+        }
 
-        public Usuario(string email, string senha)
+        public Usuario(string email, 
+                       string senha, 
+                       Status status,
+                       NivelAcesso nivelAcesso)
             : this()
         {
             Email = email;
             Senha = senha;
+            Status = status;
+            NivelAcesso = nivelAcesso;
         }
 
         public int Codigo { get; set; }
@@ -23,6 +32,8 @@ namespace AvaliacaoGibarco.BackEnd.Dominio.Entidade
         public string Senha { get; set; }
 
         public Status Status { get; set; }
+
+        public NivelAcesso NivelAcesso { get; set; }
 
         public DateTime CriadoEm { get; protected internal set; }
 
