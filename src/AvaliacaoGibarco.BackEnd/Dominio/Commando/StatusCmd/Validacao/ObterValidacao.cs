@@ -1,12 +1,12 @@
 ﻿using FluentValidation;
 
-namespace AvaliacaoGibarco.BackEnd.Dominio.Commando.AutenticacaoCmd.Validacao
+namespace AvaliacaoGibarco.BackEnd.Dominio.Commando.StatusCmd.Validacao
 {
     public class ObterValidacao : AbstractValidator<ObterCmd>
     {
         public ObterValidacao()
         {
-            RuleFor(f => f.Codigo)
+            RuleFor(c => c.Codigo)
                 .NotEmpty().WithMessage("O campo {PropertyName} precisa ser fornecido");
         }
     }

@@ -12,8 +12,8 @@ namespace AvaliacaoGibarco.BackEnd.Dominio.Servicos
     public class ClienteServ : BaseService, IClienteServ
     {
         public ClienteServ(INotificador notificador,
-                       IClienteRep rep,
-                       IPaisesRep paisesRep)
+                           IClienteRep rep,
+                           IPaisesRep paisesRep)
             : base(notificador)
         {
             _rep = rep;

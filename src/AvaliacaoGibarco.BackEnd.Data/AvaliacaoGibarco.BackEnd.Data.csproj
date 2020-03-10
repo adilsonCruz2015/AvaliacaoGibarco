@@ -82,6 +82,7 @@
     <Compile Include="Persistencia\Repositorios\AutenticacaoRep.cs" />
     <Compile Include="Persistencia\Repositorios\ClienteRep.cs" />
     <Compile Include="Persistencia\Repositorios\PaisesRep.cs" />
+    <Compile Include="Persistencia\Repositorios\StatusRep.cs" />
     <Compile Include="Persistencia\Repositorios\UsuarioRep.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

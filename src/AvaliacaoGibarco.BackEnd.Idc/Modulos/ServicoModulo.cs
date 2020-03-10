@@ -12,6 +12,7 @@ namespace AvaliacaoGibarco.BackEnd.Idc.Modulos
             recipiente.Register<IClienteServ, ClienteServ>();
             recipiente.Register<IUsuarioServ, UsuarioServ>(Lifestyle.Scoped);
             recipiente.Register<IAutenticacaoServ, AutenticacaoServ>(Lifestyle.Scoped);
+            recipiente.Register<IStatusServ, StatusServ>(Lifestyle.Scoped);
         }
     }
 }

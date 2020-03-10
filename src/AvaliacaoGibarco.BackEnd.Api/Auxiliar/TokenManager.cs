@@ -17,6 +17,11 @@ namespace AvaliacaoGibarco.BackEnd.Api.Auxiliar
         {
             byte[] key = Convert.FromBase64String(Secret);
             SymmetricSecurityKey securityKey = new SymmetricSecurityKey(key);
+            //Set issued at date
+            DateTime issuedAt = dados.IniciaEm;
+            //set the time when it expires
+            DateTime expires = dados.TerminaEm;
+            var local = new ResolverLocalArquivo();
 
             ClaimsIdentity claimsIdentity = new ClaimsIdentity(new[] {
                 new Claim(ClaimTypes.Name, dados.Codigo.ToString()),
@@ -26,8 +31,11 @@ namespace AvaliacaoGibarco.BackEnd.Api.Auxiliar
 
             SecurityTokenDescriptor descriptor = new SecurityTokenDescriptor
             {
+                Issuer = local.ParaAbsoluto("~/"),
+                Audience = local.ParaAbsoluto("~/"),
                 Subject = claimsIdentity,
-                Expires = DateTime.UtcNow.AddMinutes(dados.ExpiraEm),
+                NotBefore = issuedAt,
+                Expires = expires,
                 SigningCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256Signature)
             };
 
@@ -44,12 +52,16 @@ namespace AvaliacaoGibarco.BackEnd.Api.Auxiliar
             SecurityToken securityToken;
             JwtSecurityTokenHandler handler = new JwtSecurityTokenHandler();
             var securityKey = new SymmetricSecurityKey(Convert.FromBase64String(Secret));
+            var local = new ResolverLocalArquivo();
 
             TokenValidationParameters parameters = new TokenValidationParameters()
             {
-                RequireExpirationTime = true,
+                ValidAudience = local.ParaAbsoluto("~/"),
+                ValidIssuer = local.ParaAbsoluto("~/"),
+                ValidateLifetime = true,
                 ValidateIssuer = false,
-                ValidateAudience = false,
+                ValidateIssuerSigningKey = true,
+                LifetimeValidator = LifetimeValidator,
                 IssuerSigningKey = securityKey
             };
 
@@ -74,17 +86,22 @@ namespace AvaliacaoGibarco.BackEnd.Api.Auxiliar
         {
             try
             {
+                var now = DateTime.Now;
                 JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
                 JwtSecurityToken jwtToken = (JwtSecurityToken)tokenHandler.ReadToken(token);
                 var securityKey = new SymmetricSecurityKey(Convert.FromBase64String(Secret));
+                var local = new ResolverLocalArquivo();
 
                 if (jwtToken == null) return null;
                 
                 TokenValidationParameters parameters = new TokenValidationParameters()
                 {
-                    RequireExpirationTime = true,
+                    ValidAudience = local.ParaAbsoluto("~/"),
+                    ValidIssuer = local.ParaAbsoluto("~/"),
+                    ValidateLifetime = true,
                     ValidateIssuer = false,
-                    ValidateAudience = false,
+                    ValidateIssuerSigningKey = true,
+                    LifetimeValidator = LifetimeValidator,
                     IssuerSigningKey = securityKey
                 };
 
@@ -96,6 +113,15 @@ namespace AvaliacaoGibarco.BackEnd.Api.Auxiliar
             {
                 return null;
             }
+        }
+
+        public bool LifetimeValidator(DateTime? notBefore, DateTime? expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+        { 
+            if(expires != null)
+            {
+                if (DateTime.UtcNow < expires) return true;
+            }
+            return false;
         }
     }
 }

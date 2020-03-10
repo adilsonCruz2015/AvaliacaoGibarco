@@ -1,6 +1,6 @@
 ﻿using AvaliacaoGibarco.BackEnd.Dominio.Commando.Comum;
 
-namespace AvaliacaoGibarco.BackEnd.Dominio.Commando.AutenticacaoCmd
+namespace AvaliacaoGibarco.BackEnd.Dominio.Commando.StatusCmd
 {
     public class DeletarCmd : CodigoCmd
     {

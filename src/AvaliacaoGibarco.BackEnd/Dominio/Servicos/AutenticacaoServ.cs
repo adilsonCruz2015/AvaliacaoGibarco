@@ -5,8 +5,10 @@ using AvaliacaoGibarco.BackEnd.Dominio.Interfaces;
 using AvaliacaoGibarco.BackEnd.Dominio.Interfaces.Repositorio;
 using AvaliacaoGibarco.BackEnd.Dominio.Interfaces.Seguranca;
 using AvaliacaoGibarco.BackEnd.Dominio.Interfaces.Servico;
-using AvaliacaoGibarco.BackEnd.Dominio.Seguranca;
+using AvaliacaoGibarco.BackEnd.Dominio.ObjetoDeValor;
 using AvaliacaoGibarco.BackEnd.Dominio.Servicos.Comum;
+using Cmd = AvaliacaoGibarco.BackEnd.Dominio.Commando.StatusCmd;
+using System.Linq;
 
 namespace AvaliacaoGibarco.BackEnd.Dominio.Servicos
 {
@@ -15,50 +17,27 @@ namespace AvaliacaoGibarco.BackEnd.Dominio.Servicos
         public AutenticacaoServ(INotificador notificador,
                                 IAutenticacaoRep rep,
                                 IUsuarioRep usuarioRep,
-                                ITokenManager token)
+                                ITokenManager token,
+                                IStatusRep statusRep)
             :base(notificador)
         {
             _rep = rep;
             _usuarioRep = usuarioRep;
             _token = token;
+            _statusRep = statusRep;
         }
 
         private readonly IAutenticacaoRep _rep;
         private readonly IUsuarioRep _usuarioRep;
         private readonly ITokenManager _token;
+        private readonly IStatusRep _statusRep;
 
         public Autenticacao Autenticacao { get; protected internal set; }
 
-        public int Atualizar(AtualizarCmd comando)
+        public int Atualizar(Autenticacao entidade)
         {
             int resultado = -1;
-
-            if(ExecutarValidacao(new AtualizarValidacao(), comando))
-            {
-                Usuario usuario = _usuarioRep.Get(comando.CodigoUsuario);
-
-                if (!Equals(usuario, null))
-                {
-                    Autenticacao autenticacao = _rep.Get(comando.Codigo);
-
-                    if (!Equals(autenticacao, null))
-                    {
-                        comando.Aplicar(ref autenticacao, usuario);
-
-                        resultado = _rep.Update(autenticacao);
-                        if (resultado < 0)
-                            Notificar("Não foi possível atualizar a Autenticacao.");
-                    }
-                    else
-                    {
-                        Notificar("Notificação não encontrada.");
-                    }
-                }
-                else
-                {
-                    Notificar("Usuário não encontrado.");
-                }
-            }
+            resultado = _rep.Update(entidade);
 
             return resultado;
         }
@@ -67,16 +46,18 @@ namespace AvaliacaoGibarco.BackEnd.Dominio.Servicos
         {
             Autenticacao resultado = null;
             Usuario usuario = null;
+            Status status = null;
 
             if(ExecutarValidacao(new LogarValidacao(), comando))
             {
                 usuario = _rep.Logar(comando);
+                status = _statusRep.Filtrar(new Cmd.FiltrarCmd() { Descricao = "Ativo" }).FirstOrDefault();
 
                 if (Equals(usuario, null))
                     Notificar("Login ou Senha inválido!");
                 else
                 {
-                    resultado = new Autenticacao(usuario);
+                    resultado = new Autenticacao(usuario, status);
                     resultado = _rep.Insert(resultado);
 
                     if (resultado.Codigo < 0)
@@ -111,6 +92,12 @@ namespace AvaliacaoGibarco.BackEnd.Dominio.Servicos
         private void AplicarToken(Autenticacao autenticacao)
         {
             autenticacao.Token = _token.GenerateToken(autenticacao);
+        }
+
+        public void Sair()
+        {
+            if (!Equals(Autenticacao, null))
+                _rep.Delete(Autenticacao.Codigo);
         }
     }
 }

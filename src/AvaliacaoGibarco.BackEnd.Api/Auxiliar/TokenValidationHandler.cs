@@ -40,7 +40,7 @@ namespace AvaliacaoGibarco.BackEnd.Api.Auxiliar
                     var serv = ServiceLocator.Current.GetInstance<IAutenticacaoServ>();
                     Autenticacao autenticacao = serv.Inicializar(new InicializarCmd() { Token = token });
                 }
-                catch
+                catch(Exception ex)
                 {
                     return await base.SendAsync(request, cancellationToken);
                 }

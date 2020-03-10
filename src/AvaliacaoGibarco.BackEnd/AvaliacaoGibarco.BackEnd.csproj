@@ -81,20 +81,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Dominio\Commando\AutenticacaoCmd\AtualizarCmd.cs" />
-    <Compile Include="Dominio\Commando\AutenticacaoCmd\DeletarCmd.cs" />
-    <Compile Include="Dominio\Commando\AutenticacaoCmd\FiltrarCmd.cs" />
     <Compile Include="Dominio\Commando\AutenticacaoCmd\InicializarCmd.cs" />
-    <Compile Include="Dominio\Commando\AutenticacaoCmd\InserirCmd.cs" />
     <Compile Include="Dominio\Commando\AutenticacaoCmd\LogarCmd.cs" />
-    <Compile Include="Dominio\Commando\AutenticacaoCmd\ObterCmd.cs" />
-    <Compile Include="Dominio\Commando\AutenticacaoCmd\Validacao\AtualizarValidacao.cs" />
-    <Compile Include="Dominio\Commando\AutenticacaoCmd\Validacao\DeletarValidacao.cs" />
-    <Compile Include="Dominio\Commando\AutenticacaoCmd\Validacao\FiltrarValidacao.cs" />
     <Compile Include="Dominio\Commando\AutenticacaoCmd\Validacao\InicializarValidacao.cs" />
-    <Compile Include="Dominio\Commando\AutenticacaoCmd\Validacao\InserirValidacao.cs" />
     <Compile Include="Dominio\Commando\AutenticacaoCmd\Validacao\LogarValidacao.cs" />
-    <Compile Include="Dominio\Commando\AutenticacaoCmd\Validacao\ObterValidacao.cs" />
     <Compile Include="Dominio\Commando\ClienteCmd\AtualizarCmd.cs" />
     <Compile Include="Dominio\Commando\ClienteCmd\DeletarCmd.cs" />
     <Compile Include="Dominio\Commando\ClienteCmd\FiltrarCmd.cs" />
@@ -116,6 +106,16 @@
     <Compile Include="Dominio\Commando\PaisesCmd\Validacao\FiltrarValidacao.cs" />
     <Compile Include="Dominio\Commando\PaisesCmd\Validacao\InserirValidacao.cs" />
     <Compile Include="Dominio\Commando\PaisesCmd\Validacao\ObterValidacao.cs" />
+    <Compile Include="Dominio\Commando\StatusCmd\AtualizarCmd.cs" />
+    <Compile Include="Dominio\Commando\StatusCmd\DeletarCmd.cs" />
+    <Compile Include="Dominio\Commando\StatusCmd\FiltrarCmd.cs" />
+    <Compile Include="Dominio\Commando\StatusCmd\InserirCmd.cs" />
+    <Compile Include="Dominio\Commando\StatusCmd\ObterCmd.cs" />
+    <Compile Include="Dominio\Commando\StatusCmd\Validacao\AtualizarValidacao.cs" />
+    <Compile Include="Dominio\Commando\StatusCmd\Validacao\DeletarValidacao.cs" />
+    <Compile Include="Dominio\Commando\StatusCmd\Validacao\FiltrarValidacao.cs" />
+    <Compile Include="Dominio\Commando\StatusCmd\Validacao\InserirValidacao.cs" />
+    <Compile Include="Dominio\Commando\StatusCmd\Validacao\ObterValidacao.cs" />
     <Compile Include="Dominio\Commando\UsuarioCmd\AtualizarCmd.cs" />
     <Compile Include="Dominio\Commando\UsuarioCmd\DeletarCmd.cs" />
     <Compile Include="Dominio\Commando\UsuarioCmd\FiltrarCmd.cs" />
@@ -130,6 +130,7 @@
     <Compile Include="Dominio\Entidade\Cliente.cs" />
     <Compile Include="Dominio\Entidade\Contato.cs" />
     <Compile Include="Dominio\Entidade\Usuario.cs" />
+    <Compile Include="Dominio\Interfaces\Ambiente\IResolverLocalArquivo.cs" />
     <Compile Include="Dominio\Interfaces\IAutoValidacao.cs" />
     <Compile Include="Dominio\Interfaces\INotificador.cs" />
     <Compile Include="Dominio\Interfaces\Repositorio\IAutenticacaoRep.cs" />
@@ -137,22 +138,26 @@
     <Compile Include="Dominio\Interfaces\Repositorio\Comum\IRepositorioBaseLeitura.cs" />
     <Compile Include="Dominio\Interfaces\Repositorio\IClienteRep.cs" />
     <Compile Include="Dominio\Interfaces\Repositorio\IPaisesRep.cs" />
+    <Compile Include="Dominio\Interfaces\Repositorio\IStatusRep.cs" />
     <Compile Include="Dominio\Interfaces\Repositorio\IUsuarioRep.cs" />
     <Compile Include="Dominio\Interfaces\Seguranca\ITokenManager.cs" />
     <Compile Include="Dominio\Interfaces\Servico\IAutenticacaoServ.cs" />
     <Compile Include="Dominio\Interfaces\Servico\IClienteServ.cs" />
     <Compile Include="Dominio\Interfaces\Servico\IPaisServ.cs" />
+    <Compile Include="Dominio\Interfaces\Servico\IStatusServ.cs" />
     <Compile Include="Dominio\Interfaces\Servico\IUsuarioServ.cs" />
     <Compile Include="Dominio\Notificacoes\Notificacao.cs" />
     <Compile Include="Dominio\Notificacoes\Notificador.cs" />
     <Compile Include="Dominio\ObjetoDeValor\Banco.cs" />
     <Compile Include="Dominio\ObjetoDeValor\Pais.cs" />
+    <Compile Include="Dominio\ObjetoDeValor\Status.cs" />
     <Compile Include="Dominio\Seguranca\GenerateSecretKey.cs" />
     <Compile Include="Dominio\Seguranca\TokenManager.cs" />
     <Compile Include="Dominio\Servicos\AutenticacaoServ.cs" />
     <Compile Include="Dominio\Servicos\ClienteServ.cs" />
     <Compile Include="Dominio\Servicos\Comum\BaseService.cs" />
     <Compile Include="Dominio\Servicos\PaisServ.cs" />
+    <Compile Include="Dominio\Servicos\StatusServ.cs" />
     <Compile Include="Dominio\Servicos\UsuarioServ.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

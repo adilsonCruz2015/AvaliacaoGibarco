@@ -8,7 +8,6 @@ namespace AvaliacaoGibarco.BackEnd.Dominio.Interfaces.Repositorio
                                          IRepositorioBaseLeitura<Autenticacao>
     {
         Usuario Logar(LogarCmd comando);
-
-        Autenticacao[] Filtrar(FiltrarCmd comando);
+        
     }
 }

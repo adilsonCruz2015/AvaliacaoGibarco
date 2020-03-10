@@ -2,6 +2,7 @@
 using AvaliacaoGibarco.BackEnd.Dominio.Commando.AutenticacaoCmd;
 using AvaliacaoGibarco.BackEnd.Dominio.Entidade;
 using AvaliacaoGibarco.BackEnd.Dominio.Interfaces.Repositorio;
+using AvaliacaoGibarco.BackEnd.Dominio.ObjetoDeValor;
 using Dapper;
 using System.Data;
 using System.Linq;
@@ -60,22 +61,30 @@ namespace AvaliacaoGibarco.BackEnd.Data.Persistencia.Repositorios
             sql.Append($@"SELECT 
                                 A.Codigo,
                                 A.Token,
-                                A.ExpiraEm,
+                                A.IniciaEm,
+                                A.TerminaEm,
+                                A.CriadoEm,
+                                A.AlteradoEm,
                                 U.Codigo,
-                                U.Email
+                                U.Email,
+                                S.Codigo,
+                                S.Nome,
+                                S.Descricao
                           FROM { nameof(Autenticacao)} AS A ");
             sql.Append($"INNER JOIN { nameof(Usuario)} AS U ON U.Codigo = A.CodigoUsuario ");
+            sql.Append($"INNER JOIN { nameof(Status)} AS S ON S.Codigo = A.CodigoStatus ");
             sql.Append(" WHERE A.Codigo = @Codigo");
 
-            return _conexao.Sessao.Query<Autenticacao, Usuario, Autenticacao>(sql.ToString(),
-                (autenticacao, usuario) =>
+            return _conexao.Sessao.Query<Autenticacao, Usuario, Status, Autenticacao>(sql.ToString(),
+                (autenticacao, usuario, status) =>
                 {
                     autenticacao.Usuario = usuario;
+                    autenticacao.Status = status;
                     return autenticacao;
                 },
                 new { Codigo = id},
                 _conexao.Transicao,
-                splitOn: "Codigo, Codigo"
+                splitOn: "Codigo, Codigo, Codigo"
                 ).FirstOrDefault();
         }
 
@@ -86,13 +95,17 @@ namespace AvaliacaoGibarco.BackEnd.Data.Persistencia.Repositorios
             StringBuilder sql = new StringBuilder();
             StringBuilder sqlLastRow = new StringBuilder();
             sql.Append($@"
-                         INSERT INTO { nameof(Autenticacao) } (Token, CodigoUsuario, ExpiraEm)
-                                VALUES(@Token, @CodigoUsuario, @ExpiraEm)");
+                         INSERT INTO { nameof(Autenticacao) } (Token, CodigoUsuario, CodigoStatus, IniciaEm, TerminaEm, CriadoEm, AlteradoEm)
+                                VALUES(@Token, @CodigoUsuario, @CodigoStatus, @IniciaEm, @TerminaEm, @CriadoEm, @AlteradoEm)");
 
             var parametros = new DynamicParameters();
             parametros.Add("@Token", obj.Token, DbType.AnsiString, size: 1000);
             parametros.Add("@CodigoUsuario", obj.Usuario.Codigo, DbType.Int32);
-            parametros.Add("@ExpiraEm", obj.ExpiraEm, DbType.Int32);
+            parametros.Add("@CodigoStatus", obj.Status.Codigo, DbType.Int32);
+            parametros.Add("@IniciaEm", obj.IniciaEm, DbType.DateTime);
+            parametros.Add("@TerminaEm", obj.TerminaEm, DbType.DateTime);
+            parametros.Add("@CriadoEm", obj.CriadoEm, DbType.DateTime);
+            parametros.Add("@AlteradoEm", obj.AlteradoEm, DbType.DateTime);
 
             resultado = _conexao.Sessao.Execute(sql.ToString(),
                                                 parametros,
@@ -135,52 +148,24 @@ namespace AvaliacaoGibarco.BackEnd.Data.Persistencia.Repositorios
             sql.Append($@"
                          Update { nameof(Autenticacao) } SET Token = @Token,
                                                              CodigoUsuario = @CodigoUsuario,
-                                                             ExpiraEm = @ExpiraEm
+                                                             CodigoStatus = @CodigoStatus, 
+                                                             IniciaEm = @IniciaEm, 
+                                                             TerminaEm = @TerminaEm, 
+                                                             AlteradoEm = @AlteradoEm
                                                          WHERE Codigo = @Codigo");
 
             var parametros = new DynamicParameters(new { obj.Codigo });
 
             parametros.Add("@Token", obj.Token, DbType.AnsiString, size: 1000);
             parametros.Add("@CodigoUsuario", obj.Usuario.Codigo, DbType.Int32);
-            parametros.Add("@ExpiraEm", obj.ExpiraEm, DbType.Int32);
+            parametros.Add("@CodigoStatus", obj.Status.Codigo, DbType.Int32);
+            parametros.Add("@IniciaEm", obj.IniciaEm, DbType.DateTime);
+            parametros.Add("@TerminaEm", obj.TerminaEm, DbType.DateTime);
+            parametros.Add("@AlteradoEm", obj.AlteradoEm, DbType.DateTime);
 
             return _conexao.Sessao.Execute(sql.ToString(),
                                            parametros,
                                            _conexao.Transicao);
-        }
-
-        public Autenticacao[] Filtrar(FiltrarCmd comando)
-        {
-            StringBuilder sql = new StringBuilder();
-            StringBuilder sqlFiltro = new StringBuilder();
-            var parametros = new DynamicParameters();
-
-            sql.Append($@"SELECT 
-                                A.Codigo,
-                                A.Token,
-                                A.ExpiraEm,                                
-                                U.Email
-                          FROM { nameof(Autenticacao)} AS A ");
-            sql.Append($"INNER JOIN { nameof(Usuario)} AS U ON U.Codigo = A.CodigoUsuario ");
-
-            if (!string.IsNullOrEmpty(comando.Email))
-            {
-                sqlFiltro.Append(" AND U.Email = @Email ");
-                parametros.Add("@Cnpj", comando.Email, DbType.AnsiString, size: 18);
-            }
-
-            sql.Append(Regex.Replace(sqlFiltro.ToString(), @"^ AND ", " WHERE "));
-
-            return _conexao.Sessao.Query<Autenticacao, Usuario, Autenticacao>(sql.ToString(),
-                (autenticacao, usuario) => 
-                {
-                    autenticacao.Usuario = usuario;
-                    return autenticacao;
-                },
-                parametros,
-                _conexao.Transicao,
-                splitOn: "Codigo, Codigo"
-                ).ToArray();
         }
     }
 }

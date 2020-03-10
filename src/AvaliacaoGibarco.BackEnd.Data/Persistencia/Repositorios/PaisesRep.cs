@@ -26,7 +26,7 @@ namespace AvaliacaoGibarco.BackEnd.Data.Persistencia.Repositorios
             sql.Append($@"DELETE 
                           FROM { nameof(Pais)} WHERE Codigo = @Codigo ");
 
-            var parametros = new DynamicParameters(new { id });
+            var parametros = new DynamicParameters(new { Codigo = id });
 
             return _conexao.Sessao.Execute(sql.ToString(), 
                                            parametros, 

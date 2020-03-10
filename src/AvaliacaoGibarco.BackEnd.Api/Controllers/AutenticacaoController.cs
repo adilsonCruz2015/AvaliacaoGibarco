@@ -49,5 +49,16 @@ namespace AvaliacaoGibarco.BackEnd.Api.Controllers
 
             return CustomResponse(resultado);
         }
+
+        [HttpDelete, Route]
+        [Display(Name = "Sair")]
+        public async Task<HttpResponseMessage> Delete()
+        {
+            if (!ModelState.IsValid) return CustomResponse(ModelState);
+
+            _serv.Sair();
+
+            return CustomResponse();
+        }
     }
 }
