@@ -2,7 +2,6 @@
 using AvaliacaoGibarco.BackEnd.Dominio.Entidade;
 using AvaliacaoGibarco.BackEnd.Dominio.Interfaces.Seguranca;
 using AvaliacaoGibarco.BackEnd.Dominio.Interfaces.Servico;
-using AvaliacaoGibarco.BackEnd.Dominio.Seguranca;
 using CommonServiceLocator;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,8 +34,7 @@ namespace AvaliacaoGibarco.BackEnd.Api.Filters
             var principal = AuthJwtToken(autorizacao);
 
             if (Equals(principal, null))
-                return false;           
-
+                return false;        
 
             return !Equals(principal, null);
         }
@@ -114,14 +112,6 @@ namespace AvaliacaoGibarco.BackEnd.Api.Filters
             }
 
             return null;
-        }
-
-        protected Autenticacao Iniciar(string token)
-        {
-            var serv = ServiceLocator.Current.GetInstance<IAutenticacaoServ>();
-            Autenticacao autenticacao = serv.Inicializar(new InicializarCmd() { Token = token });
-
-            return autenticacao;
         }
     }
 }
