@@ -174,6 +174,7 @@
     <Compile Include="Auxiliar\ResolverLocalArquivo.cs" />
     <Compile Include="Auxiliar\TokenManager.cs" />
     <Compile Include="Auxiliar\TokenValidationHandler.cs" />
+    <Compile Include="Controllers\Admin\NivelAcessoController.cs" />
     <Compile Include="Controllers\AutenticacaoController.cs" />
     <Compile Include="Controllers\ClienteController.cs" />
     <Compile Include="Controllers\MainController.cs" />

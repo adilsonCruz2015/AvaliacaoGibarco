@@ -81,6 +81,7 @@
     <Compile Include="Persistencia\Interfaces\IResolverConexao.cs" />
     <Compile Include="Persistencia\Repositorios\AutenticacaoRep.cs" />
     <Compile Include="Persistencia\Repositorios\ClienteRep.cs" />
+    <Compile Include="Persistencia\Repositorios\NivelAcessoRep.cs" />
     <Compile Include="Persistencia\Repositorios\PaisesRep.cs" />
     <Compile Include="Persistencia\Repositorios\StatusRep.cs" />
     <Compile Include="Persistencia\Repositorios\UsuarioRep.cs" />
