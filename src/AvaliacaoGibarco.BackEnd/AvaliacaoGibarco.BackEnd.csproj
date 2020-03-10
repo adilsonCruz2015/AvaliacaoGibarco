@@ -152,7 +152,6 @@
     <Compile Include="Dominio\ObjetoDeValor\Pais.cs" />
     <Compile Include="Dominio\ObjetoDeValor\Status.cs" />
     <Compile Include="Dominio\Seguranca\GenerateSecretKey.cs" />
-    <Compile Include="Dominio\Seguranca\TokenManager.cs" />
     <Compile Include="Dominio\Servicos\AutenticacaoServ.cs" />
     <Compile Include="Dominio\Servicos\ClienteServ.cs" />
     <Compile Include="Dominio\Servicos\Comum\BaseService.cs" />
