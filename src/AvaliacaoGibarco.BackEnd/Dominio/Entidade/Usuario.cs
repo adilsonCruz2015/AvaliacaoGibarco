@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AvaliacaoGibarco.BackEnd.Dominio.ObjetoDeValor;
+using System;
 
 namespace AvaliacaoGibarco.BackEnd.Dominio.Entidade
 {
@@ -19,8 +16,21 @@ namespace AvaliacaoGibarco.BackEnd.Dominio.Entidade
 
         public int Codigo { get; set; }
 
+        public string Nome { get; set; }
+
         public string Email { get; set; }
 
         public string Senha { get; set; }
+
+        public Status Status { get; set; }
+
+        public DateTime CriadoEm { get; protected internal set; }
+
+        public DateTime AlteradoEm { get; protected internal set; }
+
+        public override string ToString()
+        {
+            return Nome;
+        }
     }
 }

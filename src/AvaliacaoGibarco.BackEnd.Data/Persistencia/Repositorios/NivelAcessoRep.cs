@@ -36,8 +36,8 @@ namespace AvaliacaoGibarco.BackEnd.Data.Persistencia.Repositorios
                                 S.Nome,
                                 S.Descricao,
                                 S.CriadoEm,
-                                S.AlteradoEm,
-                          FROM { nameof(NivelAcesso)} ");
+                                S.AlteradoEm
+                          FROM { nameof(NivelAcesso)} AS N ");
             sql.Append($"INNER JOIN { nameof(Status)} AS S ON S.Codigo = N.CodigoStatus ");
 
             if (!string.IsNullOrEmpty(comando.Nome))
