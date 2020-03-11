@@ -127,11 +127,14 @@
     <Compile Include="Dominio\Commando\StatusCmd\Validacao\InserirValidacao.cs" />
     <Compile Include="Dominio\Commando\StatusCmd\Validacao\ObterValidacao.cs" />
     <Compile Include="Dominio\Commando\UsuarioCmd\AtualizarCmd.cs" />
+    <Compile Include="Dominio\Commando\UsuarioCmd\AtualizarParcialCmd.cs" />
     <Compile Include="Dominio\Commando\UsuarioCmd\DeletarCmd.cs" />
     <Compile Include="Dominio\Commando\UsuarioCmd\FiltrarCmd.cs" />
     <Compile Include="Dominio\Commando\UsuarioCmd\InserirCmd.cs" />
     <Compile Include="Dominio\Commando\UsuarioCmd\ObterCmd.cs" />
+    <Compile Include="Dominio\Commando\UsuarioCmd\Validacao\AtualizarParcialValidacao.cs" />
     <Compile Include="Dominio\Commando\UsuarioCmd\Validacao\AtualizarValidacao.cs" />
+    <Compile Include="Dominio\Commando\UsuarioCmd\Validacao\CustomValidators\CustomValidator.cs" />
     <Compile Include="Dominio\Commando\UsuarioCmd\Validacao\DeletarValidacao.cs" />
     <Compile Include="Dominio\Commando\UsuarioCmd\Validacao\FiltrarValidacao.cs" />
     <Compile Include="Dominio\Commando\UsuarioCmd\Validacao\InserirValidacao.cs" />

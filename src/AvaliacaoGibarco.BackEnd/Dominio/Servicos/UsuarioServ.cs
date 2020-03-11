@@ -39,29 +39,36 @@ namespace AvaliacaoGibarco.BackEnd.Dominio.Servicos
 
             if (ExecutarValidacao(new InserirValidacao(), comando))
             {
-                Usuario usuario = null;
-                Status status = ObterStatus("Ativo");
-                NivelAcesso nivelAcesso = null;
-
-                if (!HaNotificacoes())
+                if(Equals(ObterPorEmail(comando.Email), null))
                 {
-                    nivelAcesso = ObterNivelAcesso(comando.CodigoNivelAcesso);
+                    Usuario usuario = null;
+                    Status status = ObterStatus("Ativo");
+                    NivelAcesso nivelAcesso = null;
 
-                    if(!Equals(nivelAcesso))
+                    if (!HaNotificacoes())
                     {
-                        comando.Aplicar(ref usuario, status, nivelAcesso);
+                        nivelAcesso = ObterNivelAcesso(comando.CodigoNivelAcesso);
 
-                        usuario = _rep.Insert(usuario);
-                        if (usuario.Codigo <= 0)
+                        if (!Equals(nivelAcesso))
                         {
-                            comando.Desfazer(ref usuario);
-                            Notificar("Não foi possível inserir o Usuário");
+                            comando.Aplicar(ref usuario, status, nivelAcesso);
+
+                            usuario = _rep.Insert(usuario);
+                            if (usuario.Codigo <= 0)
+                            {
+                                comando.Desfazer(ref usuario);
+                                Notificar("Não foi possível inserir o Usuário");
+                            }
+                        }
+                        else
+                        {
+                            Notificar("Não foi possível encontrar o nível de acesso.");
                         }
                     }
-                    else
-                    {
-                        Notificar("Não foi possível encontrar o nível de acesso.");
-                    }
+                }
+                else
+                {
+                    Notificar("Já existe um usuário em nossa base de dados.");
                 }
             }
 
@@ -174,6 +181,11 @@ namespace AvaliacaoGibarco.BackEnd.Dominio.Servicos
                 Notificar("Não foi possível encontrar o nível de acesso.");
 
             return nivelAcesso;
+        }
+
+        private Usuario ObterPorEmail(string email)
+        {
+            return  _rep.ObterUserName(email);
         }
     }
 }

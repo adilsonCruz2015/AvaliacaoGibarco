@@ -23,6 +23,15 @@ namespace AvaliacaoGibarco.BackEnd.Dominio.Commando.UsuarioCmd.Validacao
                 .NotEmpty().WithMessage("O campo {PropertyName} precisa ser fornecido")
                 .Length(3, 255)
                 .WithMessage("O campo {PropertyName} precisa ter entre {MinLength} e {MaxLength} caracteres");
+
+            RuleFor(f => f.Codigo)
+                .NotEmpty().WithMessage("O campo {PropertyName} precisa ser fornecido");
+
+            RuleFor(cs => cs.CodigoStatus)
+                .NotEmpty().WithMessage("O campo {PropertyName} precisa ser fornecido");
+
+            RuleFor(cn => cn.CodigoNivelAcesso)
+                .NotEmpty().WithMessage("O campo {PropertyName} precisa ser fornecido");
         }
     }
 }

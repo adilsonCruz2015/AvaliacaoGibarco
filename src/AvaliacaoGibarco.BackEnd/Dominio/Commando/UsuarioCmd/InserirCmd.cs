@@ -20,7 +20,7 @@ namespace AvaliacaoGibarco.BackEnd.Dominio.Commando.UsuarioCmd
                                         Status status,
                                         NivelAcesso nivelAcesso) 
         {
-            usuario = new Usuario(Email, Senha, status, nivelAcesso);
+            usuario = new Usuario(Nome, Email, Senha, status, nivelAcesso);
         }
 
         public void Desfazer(ref Usuario usuario)

@@ -140,8 +140,8 @@ namespace AvaliacaoGibarco.BackEnd.Data.Persistencia.Repositorios
                                 S.Nome,
                                 S.Descricao,
                                 S.CriadoEm,
-                                S.AlteradoEm,
-                          FROM { nameof(NivelAcesso)} ");
+                                S.AlteradoEm
+                          FROM { nameof(NivelAcesso)} As N");
             sql.Append($"INNER JOIN { nameof(Status)} AS S ON S.Codigo = N.CodigoStatus ");
 
             return _conexao.Sessao.Query<NivelAcesso, Status, NivelAcesso>(sql.ToString(),
@@ -169,10 +169,10 @@ namespace AvaliacaoGibarco.BackEnd.Data.Persistencia.Repositorios
                                 S.Nome,
                                 S.Descricao,
                                 S.CriadoEm,
-                                S.AlteradoEm,
-                          FROM { nameof(NivelAcesso)} ");
-            sql.Append($"INNER JOIN { nameof(Status)} AS S ON S.Codigo = N.CodigoStatus ");
-            sql.Append(" WHERE A.Codigo = @Codigo");
+                                S.AlteradoEm
+                          FROM { nameof(NivelAcesso)} As N ");
+            sql.Append($" INNER JOIN { nameof(Status)} AS S ON S.Codigo = N.CodigoStatus ");
+            sql.Append(" WHERE N.Codigo = @Codigo");
 
             return _conexao.Sessao.Query<NivelAcesso, Status, NivelAcesso>(sql.ToString(),
                 (nivelAcesso, status) =>

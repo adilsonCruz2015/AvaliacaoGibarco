@@ -11,12 +11,14 @@ namespace AvaliacaoGibarco.BackEnd.Dominio.Entidade
             AlteradoEm = DateTime.Now;
         }
 
-        public Usuario(string email, 
+        public Usuario(string nome,
+                       string email, 
                        string senha, 
                        Status status,
                        NivelAcesso nivelAcesso)
             : this()
         {
+            Nome = nome;
             Email = email;
             Senha = senha;
             Status = status;
